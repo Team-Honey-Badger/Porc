@@ -1,4 +1,4 @@
 Porc
 ====
 
-Pacman Ogre or Porc for short, our CS 425 Final Project
+Pac-Orc or Porc for short, our CS 425 Final Project
