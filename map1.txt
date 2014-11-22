@@ -1,0 +1,40 @@
+19 19
+Examples/Rocky
+
+Objects
+k knot.mesh 1.7 0.0 0.02
+h tudorhouse.mesh 20.0 0.0 0.038
+b Barrel.mesh 3.5 0.0 1
+c column.mesh 10.0 0.0 0.1
+f fish.mesh 1.0 0.0 1
+p WoodPallet.mesh 1.0 0.0 1
+q cube.mesh 2.5 0.0 0.05
+x cube.mesh 0.0 0.0 0.0
+G WoodPallet.mesh 0.0 0.0 1
+
+Characters
+s sinbad.mesh 10.0 2
+
+
+World
+
+wwwwwwwwwwwwwwwwwww
+woGoooooowoooooooow
+wowwowwwowowwwowwow
+wooooooooooooooooow
+wowwowowwwwwowowwow
+woooowooowooowoooow
+wwwwowwwowowwwowwww
+ooowowooooooowowooo
+wwwwowowwowwowowwww
+ooooooowooowooooooo
+wwwwowowwwwwowowwww
+ooowowooooooowowooo
+wwwwowwwowowwwowwww
+woooowooowooowoooow
+wowwowowwwwwowowwow
+wooooooooooooooooow
+wowwowwwowowwwowwow
+wooooosoowoooooooow
+wwwwwwwwwwwwwwwwwww
+
