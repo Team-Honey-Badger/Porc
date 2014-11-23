@@ -287,186 +287,190 @@ Agent::moveTo(){
 	if(nextLocation()){
 		return;
 	}
+	if(agentType == 's'){ //if player 
 
-	list<GridNode*> open;
-	list<GridNode*> closed;
-
-	//add initial position to open list
-	open.push_back(selfNode);
-
-	//set start and goal
-	GridNode *current = selfNode;
-	GridNode *goal;
-	if(toggle){
-		goal = goalNode;
 	}
-	else{
-		goal = startNode;
-	}
-	toggle = !toggle;
+	if(agentType == 'g'){ //if ghost
+		list<GridNode*> open;
+		list<GridNode*> closed;
 
-	//values for A*
-	int F, G, H; //A* values
-	GridNode *bestN; //best node
-	int bestF;	//best F value
-	bool inClosed, inOpen; //bools checking if node is already in a list
-	list<GridNode*> temp; //holds all neighbor nodes
+		//add initial position to open list
+		open.push_back(selfNode);
 
-	//find path
-	while(true){
-
-		//add new and clear adjacent nodes to open list
-		temp.clear(); //clear previous neighbors
-		temp.push_front(grid->getEastNode(current));
-		temp.push_front(grid->getNENode(current));
-		temp.push_front(grid->getNorthNode(current));
-		temp.push_front(grid->getNWNode(current));
-		temp.push_front(grid->getWestNode(current));
-		temp.push_front(grid->getSWNode(current));
-		temp.push_front(grid->getSouthNode(current));
-		temp.push_front(grid->getSENode(current));
-		for(list<GridNode*>::iterator j = temp.begin(); j != temp.end(); j++){
-			if((*j) != NULL){
-				inClosed = false;
-				for(list<GridNode*>::iterator i = closed.begin(); i != closed.end(); i++){
-					if((*i) == (*j)){
-						inClosed = true;
-						break;
-					}
-				}
-				inOpen = false;
-				for(list<GridNode*>::iterator i = open.begin(); i != open.end(); i++){
-					if((*i) == (*j)){
-						inOpen = true;
-						break;
-					}
-				}
-				if(!inClosed && !inOpen){
-					open.push_front((*j));
-				}
-			}
+		//set start and goal
+		GridNode *current = selfNode;
+		GridNode *goal;
+		if(toggle){
+			goal = goalNode;
 		}
-		
-		//find current's best neighbor
-		bestN = NULL; //best node
-		bestF = 99999999;	//best F value
-		
-		for(list<GridNode*>::iterator i = open.begin(); i != open.end(); i++){
-			//find distance cost
-			H = 10 * grid->getDistance((*i), goal);
-			//find movement cost
-			G = 10 * grid->getDistance(current, (*i));
-			if( G = 20 ){
-				G = 14; //compensate for diagonals
-			}
-			//add up total
-			F = G + H;
-
-			//compare F values and if the current iteration beats the best, set it as the new best
-			if( F < bestF ){
-				bestF = F;
-				bestN = (*i);
-			}
-		}
-		
-		//if a neighbor was found
-		if(bestN != NULL){
-
-			//iterate closed list backwards
-			for(list<GridNode*>::reverse_iterator i = closed.rbegin(); i != closed.rend(); i++){
-				if((*i) != current){
-					//if one of the parent nodes is adjacent to the selected node
-					if( ( abs( (*i)->getRow()-bestN->getRow() ) <= 1) && ( abs( (*i)->getColumn()-bestN->getColumn() ) <= 1) ){
-						//bring current back to it and restart the closed list from here
-						current = (*i);
-						break;
-					}
-				}
-			}
-
-			//move current to the best neighbor
-			bestN->parent = current;
-			current = bestN;
-
-			//remove the selected node from open list
-			open.remove(current);
-			//add it to closed list
-			closed.push_front(current);
-		}
-		//else return to previous closed list node
 		else{
-			closed.remove(current);
-			GridNode *temp = current;
-			current = current->parent;
-			temp->parent = NULL;
+			goal = startNode;
 		}
+		toggle = !toggle;
 
-		//break if it reached the goal
-		if( current->getRow() == goal->getRow() && current->getColumn() == goal->getColumn() ){
-			
-			int numChar;
-			int counter = 0;
-			
-			//set up counter to count backwards
-			GridNode *countDown = current;
-			while(countDown != selfNode){
-				counter++;
-				countDown = countDown->parent;
+		//values for A*
+		int F, G, H; //A* values
+		GridNode *bestN; //best node
+		int bestF;	//best F value
+		bool inClosed, inOpen; //bools checking if node is already in a list
+		list<GridNode*> temp; //holds all neighbor nodes
+
+		//find path
+		while(true){
+
+			//add new and clear adjacent nodes to open list
+			temp.clear(); //clear previous neighbors
+			temp.push_front(grid->getEastNode(current));
+			temp.push_front(grid->getNENode(current));
+			temp.push_front(grid->getNorthNode(current));
+			temp.push_front(grid->getNWNode(current));
+			temp.push_front(grid->getWestNode(current));
+			temp.push_front(grid->getSWNode(current));
+			temp.push_front(grid->getSouthNode(current));
+			temp.push_front(grid->getSENode(current));
+			for(list<GridNode*>::iterator j = temp.begin(); j != temp.end(); j++){
+				if((*j) != NULL){
+					inClosed = false;
+					for(list<GridNode*>::iterator i = closed.begin(); i != closed.end(); i++){
+						if((*i) == (*j)){
+							inClosed = true;
+							break;
+						}
+					}
+					inOpen = false;
+					for(list<GridNode*>::iterator i = open.begin(); i != open.end(); i++){
+						if((*i) == (*j)){
+							inOpen = true;
+							break;
+						}
+					}
+					if(!inClosed && !inOpen){
+						open.push_front((*j));
+					}
+				}
 			}
+		
+			//find current's best neighbor
+			bestN = NULL; //best node
+			bestF = 99999999;	//best F value
+		
+			for(list<GridNode*>::iterator i = open.begin(); i != open.end(); i++){
+				//find distance cost
+				H = 10 * grid->getDistance((*i), goal);
+				//find movement cost
+				G = 10 * grid->getDistance(current, (*i));
+				if( G = 20 ){
+					G = 14; //compensate for diagonals
+				}
+				//add up total
+				F = G + H;
 
-			//save end point
-			GridNode *endPoint = current;
+				//compare F values and if the current iteration beats the best, set it as the new best
+				if( F < bestF ){
+					bestF = F;
+					bestN = (*i);
+				}
+			}
+		
+			//if a neighbor was found
+			if(bestN != NULL){
 
-			//backtrack the path to the goal into the walklist
-			while( current != selfNode ){
-				mWalkList.push_front(grid->getPosition(current->getRow(), current->getColumn()));
-
-				//convert counter into number chars
-				numChar = --counter%10;
-				switch(numChar){
-				case 0:	current->contains = '0';
-						break;
-				case 1:	current->contains = '1';
-						break;
-				case 2:	current->contains = '2';
-						break;
-				case 3:	current->contains = '3';
-						break;
-				case 4:	current->contains = '4';
-						break;
-				case 5:	current->contains = '5';
-						break;
-				case 6:	current->contains = '6';
-						break;
-				case 7:	current->contains = '7';
-						break;
-				case 8:	current->contains = '8';
-						break;
-				case 9:	current->contains = '9';
-						break;
+				//iterate closed list backwards
+				for(list<GridNode*>::reverse_iterator i = closed.rbegin(); i != closed.rend(); i++){
+					if((*i) != current){
+						//if one of the parent nodes is adjacent to the selected node
+						if( ( abs( (*i)->getRow()-bestN->getRow() ) <= 1) && ( abs( (*i)->getColumn()-bestN->getColumn() ) <= 1) ){
+							//bring current back to it and restart the closed list from here
+							current = (*i);
+							break;
+						}
+					}
 				}
 
-				//traverse to parent
-				current = current->parent;
+				//move current to the best neighbor
+				bestN->parent = current;
+				current = bestN;
 
+				//remove the selected node from open list
+				open.remove(current);
+				//add it to closed list
+				closed.push_front(current);
 			}
-			//mark end
-			endPoint->contains = 'G';
-			//mark start
-			current->contains = 'S';
-			//print out the path
-			grid->printToFile();
-			//erase path from file
-			grid->eraseContains();
+			//else return to previous closed list node
+			else{
+				closed.remove(current);
+				GridNode *temp = current;
+				current = current->parent;
+				temp->parent = NULL;
+			}
 
-			//set agents initial position to the goal position it just reached
-			setSelfNode(goal->getRow(), goal->getColumn());
-			break;
-		}
+			//break if it reached the goal
+			if( current->getRow() == goal->getRow() && current->getColumn() == goal->getColumn() ){
+			
+				int numChar;
+				int counter = 0;
+			
+				//set up counter to count backwards
+				GridNode *countDown = current;
+				while(countDown != selfNode){
+					counter++;
+					countDown = countDown->parent;
+				}
 
-		//break if it runs out of nodes
-		if( open.empty() ){
-			break;
+				//save end point
+				GridNode *endPoint = current;
+
+				//backtrack the path to the goal into the walklist
+				while( current != selfNode ){
+					mWalkList.push_front(grid->getPosition(current->getRow(), current->getColumn()));
+
+					//convert counter into number chars
+					numChar = --counter%10;
+					switch(numChar){
+					case 0:	current->contains = '0';
+							break;
+					case 1:	current->contains = '1';
+							break;
+					case 2:	current->contains = '2';
+							break;
+					case 3:	current->contains = '3';
+							break;
+					case 4:	current->contains = '4';
+							break;
+					case 5:	current->contains = '5';
+							break;
+					case 6:	current->contains = '6';
+							break;
+					case 7:	current->contains = '7';
+							break;
+					case 8:	current->contains = '8';
+							break;
+					case 9:	current->contains = '9';
+							break;
+					}
+
+					//traverse to parent
+					current = current->parent;
+
+				}
+				//mark end
+				endPoint->contains = 'G';
+				//mark start
+				current->contains = 'S';
+				//print out the path
+				grid->printToFile();
+				//erase path from file
+				grid->eraseContains();
+
+				//set agents initial position to the goal position it just reached
+				setSelfNode(goal->getRow(), goal->getColumn());
+				break;
+			}
+
+			//break if it runs out of nodes
+			if( open.empty() ){
+				break;
+			}
 		}
 	}
 }
