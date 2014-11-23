@@ -297,22 +297,28 @@ Agent::moveTo(){
 
 	}
 	if(agentType == 'g'){ //if ghost
-		list<GridNode*> open;
-		list<GridNode*> closed;
-
-		//add initial position to open list
-		open.push_back(selfNode);
-
 		//set start and goal
 		GridNode *current = selfNode;
 		GridNode *goal;
-		if(toggle){
+		goal = selfNode;
+		if(goalNode == current){
+			cout << "goal!!!!" << endl;
+		}
+
+
+		/*if(toggle){
 			goal = goalNode;
 		}
 		else{
 			goal = startNode;
 		}
-		toggle = !toggle;
+		toggle = !toggle;*/
+		
+		list<GridNode*> open;
+		list<GridNode*> closed;
+
+		//add initial position to open list
+		open.push_back(selfNode);
 
 		//values for A*
 		int F, G, H; //A* values
@@ -423,50 +429,14 @@ Agent::moveTo(){
 					countDown = countDown->parent;
 				}
 
-				//save end point
-				GridNode *endPoint = current;
-
 				//backtrack the path to the goal into the walklist
 				while( current != selfNode ){
 					mWalkList.push_front(grid->getPosition(current->getRow(), current->getColumn()));
-
-					//convert counter into number chars
-					numChar = --counter%10;
-					switch(numChar){
-					case 0:	current->contains = '0';
-							break;
-					case 1:	current->contains = '1';
-							break;
-					case 2:	current->contains = '2';
-							break;
-					case 3:	current->contains = '3';
-							break;
-					case 4:	current->contains = '4';
-							break;
-					case 5:	current->contains = '5';
-							break;
-					case 6:	current->contains = '6';
-							break;
-					case 7:	current->contains = '7';
-							break;
-					case 8:	current->contains = '8';
-							break;
-					case 9:	current->contains = '9';
-							break;
-					}
 
 					//traverse to parent
 					current = current->parent;
 
 				}
-				//mark end
-				endPoint->contains = 'G';
-				//mark start
-				current->contains = 'S';
-				//print out the path
-				grid->printToFile();
-				//erase path from file
-				grid->eraseContains();
 
 				//set agents initial position to the goal position it just reached
 				setSelfNode(goal->getRow(), goal->getColumn());

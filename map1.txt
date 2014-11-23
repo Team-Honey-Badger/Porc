@@ -13,13 +13,14 @@ x cube.mesh 0.0 0.0 0.0
 G WoodPallet.mesh 0.0 0.0 1
 
 Characters
-s sinbad.mesh 10.0 2 c
+c sinbad.mesh 10.0 2 c
+g sinbad.mesh 10.0 2 g
 
 
 World
 
 wwwwwwwwwwwwwwwwwww
-woGoooooowoooooooow
+woooooooowoooooooow
 wowwowwwowowwwowwow
 wooooooooooooooooow
 wowwowowwwwwowowwow
@@ -27,7 +28,7 @@ woooowooowooowoooow
 wwwwowwwowowwwowwww
 ooowowooooooowowooo
 wwwwowowwowwowowwww
-ooooooowooowooooooo
+ooooooowogowooooooo
 wwwwowowwwwwowowwww
 ooowowooooooowowooo
 wwwwowwwowowwwowwww
@@ -35,6 +36,6 @@ woooowooowooowoooow
 wowwowowwwwwowowwow
 wooooooooooooooooow
 wowwowwwowowwwowwow
-wooooosoowoooooooow
+woooooooowoooooooow
 wwwwwwwwwwwwwwwwwww
 
