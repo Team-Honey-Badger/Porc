@@ -1,7 +1,7 @@
 #include "Agent.h"
 #include "Grid.h"
 
-Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid/*, GridNode *start, GridNode *goal*/)
+Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type)
 {
 	using namespace Ogre;
 
@@ -13,6 +13,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	startNode = new GridNode(-1, 4, 1, true);
 	goalNode = new GridNode(-1, 4, 8, true);
 	toggle = true;
+	this->agentType = type;
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 

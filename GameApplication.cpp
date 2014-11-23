@@ -58,6 +58,7 @@ GameApplication::loadEnv()
 		float scale;
 		float orient;
 		bool agent;
+		char type;
 	};
 
 	//for saving goal coodinates
@@ -128,7 +129,7 @@ GameApplication::loadEnv()
 		inputfile >> buf;		// read in the char
 		if (buf != "World")
 		{
-			inputfile >> rent->filename >> rent->y >> rent->scale; // read the rest of the line
+			inputfile >> rent->filename >> rent->y >> rent->scale >> rent->type; // read the rest of the line
 			rent->agent = true;			// this is an agent
 			objs[buf] = rent;			// store the agent in the map
 			rent = new readEntity();	// create a new instance to store the next object
@@ -147,18 +148,34 @@ GameApplication::loadEnv()
 			if (rent != NULL)		// it might not be an agent or object
 				if (rent->agent)	// if it is an agent...
 				{
-					// Use subclasses instead!
-					agent = new Agent(this->mSceneMgr, getNewName(), rent->filename, rent->y, rent->scale, grid);
-					agentList.push_back(agent);
-					agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
-					agent->setSelfNode(i, j);
-					agent->setStartNode(i, j);
-					//spawn a wooden pallet at the players feet to represent the start (S)
-					grid->loadObject(getNewName(), "WoodPallet.mesh", i, 0.0f, j, 1.0f);
-					grid->getNode(i,j)->setClear();
+					if (rent->type == 'c')
+					{
+						agent = new Agent(this->mSceneMgr, getNewName(), rent->filename, rent->y, rent->scale, grid, rent->type);
+						agentList.push_back(agent);
+						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
+						agent->setSelfNode(i, j);
+						agent->setStartNode(i, j);
+						//spawn a wooden pallet at the players feet to represent the start (S)
+						grid->loadObject(getNewName(), "WoodPallet.mesh", i, 0.0f, j, 1.0f);
+						grid->getNode(i,j)->setClear();
 
-					// If we were using different characters, we'd have to deal with 
-					// different animation clips. 
+						// If we were using different characters, we'd have to deal with 
+						// different animation clips. 
+					}
+					if (rent->type == 'g')
+					{
+						agent = new Agent(this->mSceneMgr, getNewName(), rent->filename, rent->y, rent->scale, grid, rent->type);
+						agentList.push_back(agent);
+						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
+						agent->setSelfNode(i, j);
+						agent->setStartNode(i, j);
+						//spawn a wooden pallet at the players feet to represent the start (S)
+						grid->loadObject(getNewName(), "WoodPallet.mesh", i, 0.0f, j, 1.0f);
+						grid->getNode(i,j)->setClear();
+
+						// If we were using different characters, we'd have to deal with 
+						// different animation clips. 
+					}
 				}
 				else	// Load objects
 				{

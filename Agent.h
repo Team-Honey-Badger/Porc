@@ -15,6 +15,7 @@ private:
 	Ogre::Entity* mBodyEntity;
 	float height;						// height the character should be moved up
 	float scale;						// scale of character from original model
+	char agentType;
 
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
@@ -68,7 +69,7 @@ private:
 	bool procedural;						// Is this character performing a procedural animation
     //////////////////////////////////////////////
 public:
-	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid/*, GridNode *start, GridNode *goal*/);
+	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type);
 	~Agent();
 	void setPosition(float x, float y, float z);
 
