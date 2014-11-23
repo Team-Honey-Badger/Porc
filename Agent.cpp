@@ -81,6 +81,18 @@ Agent::setPosition(float x, float y, float z)
 	}
 }
 
+void
+Agent::setOrientation(int orientation)
+{
+	this->orientation = orientation;
+}
+
+int
+Agent::getOrientation()
+{
+	return this->orientation;
+}
+
 // update is called at every frame from GameApplication::addTime
 void
 Agent::update(Ogre::Real deltaTime) 

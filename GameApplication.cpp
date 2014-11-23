@@ -392,7 +392,19 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     }
 	else if (arg.key == OIS::KC_W)
 	{
-
+		agent->setOrientation(1);
+	}
+	else if (arg.key == OIS::KC_S)
+	{
+		agent->setOrientation(2);
+	}
+	else if (arg.key == OIS::KC_A)
+	{
+		agent->setOrientation(3);
+	}
+	else if (arg.key == OIS::KC_D)
+	{
+		agent->setOrientation(4);
 	}
    
    //mCameraMan->injectKeyDown(arg);
