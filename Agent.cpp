@@ -15,6 +15,11 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	toggle = true;
 	this->agentType = type;
 
+	if(agentType == 'g'){
+		//make a list of
+
+	}
+
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
 	if (mSceneMgr == NULL)
@@ -330,13 +335,11 @@ Agent::moveTo(){
 		//set start and goal
 		GridNode *current;
 		GridNode *goal;
-		
+
 		if( goalNode->getRow() == selfNode->getRow() && goalNode->getColumn() == selfNode->getColumn() ){ // has goal been reached?
 			//set new goal
 			current = selfNode;
 			goal = selfNode;
-
-			cout << "self's north node is clear? " << grid->getNorthNode(this->selfNode)->isClear() << endl;
 
 			return;
 		}
