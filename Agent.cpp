@@ -108,9 +108,9 @@ Agent::getAgentType()
 void
 Agent::update(Ogre::Real deltaTime) 
 {
-	this->updateAnimations(deltaTime*10);	// Update animation playback
+	this->updateAnimations(deltaTime);	// Update animation playback
+	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go
-	this->updateLocomote(deltaTime*10);	// Update Locomotion
 }
 
 
