@@ -17,6 +17,7 @@ private:
 	float scale;						// scale of character from original model
 	char agentType;
 	int orientation;					//determines the direction/orientation of the character
+	int defaultOrientation;				//character keeps default orientation until able to adapt new one
 
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
