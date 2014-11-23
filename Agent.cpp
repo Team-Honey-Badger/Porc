@@ -64,8 +64,13 @@ Agent::setStartNode(int r, int c){
 
 void
 Agent::setGoalNode(){
-	std::random_shuffle(intersections.begin(), intersections.end());
-	goalNode = intersections.at(0);
+	GridNode *prev;
+	do{
+		prev = goalNode;
+		std::random_shuffle(intersections.begin(), intersections.end());
+		goalNode = intersections.at(0);
+
+	}while(grid->getDistance(goalNode, selfNode) > 5 || prev == goalNode);
 	goalNode->parent = NULL;
 }
 
