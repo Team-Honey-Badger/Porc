@@ -86,7 +86,7 @@ void
 Agent::update(Ogre::Real deltaTime) 
 {
 	this->updateAnimations(deltaTime);	// Update animation playback
-	if (this->agentType == 'g')
+	if (this->agentType == 'g') //making the assumption that only ghosts use locomote because, it invokes A*
 		this->updateLocomote(deltaTime);	// Update Locomotion
 }
 
@@ -165,6 +165,12 @@ void Agent::setTopAnimation(AnimID id, bool reset)
 		mFadingIn[id] = true;
 		if (reset) mAnims[id]->setTimePosition(0);
 	}
+}
+
+void
+Agent::updateBody(Ogre::Real deltaTime)
+{
+
 }
 
 void 
