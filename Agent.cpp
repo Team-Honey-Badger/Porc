@@ -311,7 +311,7 @@ Agent::moveTo(){
 	if(nextLocation()){
 		return;
 	}
-	if(agentType == 'c'){ //if player 
+	if(agentType == 'c'){ //if player
 //		switch(this->orientation)
 //		{
 //		case 1:
