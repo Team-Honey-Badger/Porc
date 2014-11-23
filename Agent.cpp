@@ -93,6 +93,12 @@ Agent::getOrientation()
 	return this->orientation;
 }
 
+char
+Agent::getAgentType()
+{
+	return this->agentType;
+}
+
 // update is called at every frame from GameApplication::addTime
 void
 Agent::update(Ogre::Real deltaTime) 
@@ -182,7 +188,6 @@ void Agent::setTopAnimation(AnimID id, bool reset)
 void
 Agent::updateBody(Ogre::Real deltaTime)
 {
-
 }
 
 void 
@@ -234,8 +239,14 @@ Agent::fadeAnimations(Ogre::Real deltaTime)
 bool 
 Agent::nextLocation()
 {
-	//check if there is another location
-	return !mWalkList.empty();
+	if (mWalkList.empty())
+	return false;
+
+	mDestination = mWalkList.front();
+	mWalkList.pop_front();
+	mDirection = mDestination - mBodyNode->getPosition();
+	mDistance = mDirection.normalise();
+	return true;
 }
 
 void 
@@ -307,6 +318,7 @@ Agent::moveTo(){
 	//}
 
 	if(agentType == 'c'){ //if player
+		//cout << "orientation: " << this->orientation << endl;
 		switch(this->orientation)
 		{
 		case 1:

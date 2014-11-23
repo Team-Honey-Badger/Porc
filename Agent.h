@@ -83,6 +83,8 @@ public:
 	void setOrientation(int orientation);
 	int getOrientation();
 
+	char getAgentType();
+
 	void update(Ogre::Real deltaTime);		// update the agent
 	
 	void setBaseAnimation(AnimID id, bool reset = false);	// choose animation to display

@@ -383,19 +383,29 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_W)
 	{
-		agent->setOrientation(1);
+		std::list<Agent*>::iterator iter;
+		Agent *charAgent = NULL;
+		for (iter = agentList.begin(); iter != agentList.end(); iter++)
+		{
+			if ((*iter)->getAgentType() == 'c')
+				charAgent = (*iter);
+
+		}
 	}
 	else if (arg.key == OIS::KC_S)
 	{
-		agent->setOrientation(2);
+		this->agent->setOrientation(2);
+		std::cout << "2" << std::endl;
 	}
 	else if (arg.key == OIS::KC_A)
 	{
-		agent->setOrientation(3);
+		this->agent->setOrientation(3);
+		std::cout << "3" << std::endl;
 	}
 	else if (arg.key == OIS::KC_D)
 	{
-		agent->setOrientation(4);
+		this->agent->setOrientation(4);
+		std::cout << "4" << std::endl;
 	}
    
    //mCameraMan->injectKeyDown(arg);
