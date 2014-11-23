@@ -310,11 +310,17 @@ Agent::moveTo(){
 	}
 	if(agentType == 'g'){ //if ghost
 		//set start and goal
-		GridNode *current = selfNode;
+		GridNode *current;
 		GridNode *goal;
-		goal = selfNode;
-		if(goalNode == current){
-			cout << "goal!!!!" << endl;
+		
+		if( goalNode->getRow() == selfNode->getRow() && goalNode->getColumn() == selfNode->getColumn() ){ // has goal been reached?
+			//set new goal
+			current = selfNode;
+			goal = selfNode;
+			return;
+		}
+		else{ // no need to find a new goal
+			return;
 		}
 
 
