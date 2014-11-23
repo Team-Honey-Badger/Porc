@@ -391,12 +391,12 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 		Agent *tempAgent = agentList.back();
 		tempAgent->setOrientation(2);
 	}
-	else if (arg.key == OIS::KC_A)
+	else if (arg.key == OIS::KC_D)
 	{
 		Agent *tempAgent = agentList.back();
 		tempAgent->setOrientation(3);
 	}
-	else if (arg.key == OIS::KC_D)
+	else if (arg.key == OIS::KC_A)
 	{
 		Agent *tempAgent = agentList.back();
 		tempAgent->setOrientation(4);
