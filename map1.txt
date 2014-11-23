@@ -1,4 +1,4 @@
-19 19
+9:40 PM 11/22/201419 19
 Examples/Rocky
 
 Objects
@@ -13,18 +13,14 @@ x cube.mesh 0.0 0.0 0.0
 G WoodPallet.mesh 0.0 0.0 1
 
 Characters
-<<<<<<< HEAD
-c sinbad.mesh 10.0 2 c
-=======
 s sinbad.mesh 10.0 2 c
->>>>>>> origin/master
 g sinbad.mesh 10.0 2 g
 
 
 World
 
 wwwwwwwwwwwwwwwwwww
-woooooooowoooooooow
+woGoooooowoooooooow
 wowwowwwowowwwowwow
 wooooooooooooooooow
 wowwowowwwwwowowwow
@@ -32,14 +28,14 @@ woooowooowooowoooow
 wwwwowwwowowwwowwww
 ooowowooooooowowooo
 wwwwowowwowwowowwww
-ooooooowogowooooooo
+ooooooowooowooooooo
 wwwwowowwwwwowowwww
 ooowowooooooowowooo
 wwwwowwwowowwwowwww
 wgooowooowooowoooow
-wowwwowwwwwowowwow
+wowwwowwwwwowowwoww
 wooooooooooooooooow
 wowwowwwowowwwowwow
-woooooooowoooooooow
+wooooosoowoooooooow
 wwwwwwwwwwwwwwwwwww
 
