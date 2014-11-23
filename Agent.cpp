@@ -17,8 +17,8 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 
 	if(agentType == 'g'){
 		//make a list of intersections
-		//GridNode *temp = 
-		
+		GridNode *temp = grid->getNode(0,0);
+		goalNode = temp;
 	}
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
@@ -349,7 +349,7 @@ Agent::moveTo(){
 			current = selfNode;
 			goal = selfNode;
 
-			return;
+			//return;
 		}
 		else{ // no need to find a new goal
 			return;
