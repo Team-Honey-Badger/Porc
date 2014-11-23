@@ -184,7 +184,7 @@ GameApplication::loadEnv()
 				if (c == 'w') // create a wall
 				{
 					Entity* ent = mSceneMgr->createEntity(getNewName(), Ogre::SceneManager::PT_CUBE);
-					ent->setMaterialName("Examples/WaterStream");
+					ent->setMaterialName("WoodPallet");
 					Ogre::SceneNode* mNode = mSceneMgr->getRootSceneNode()->createChildSceneNode();
 					mNode->attachObject(ent);
 					mNode->scale(0.1f,0.2f,0.1f); // cube is 100 x 100

@@ -1,5 +1,5 @@
 19 19
-Examples/Rocky
+Examples/Chrome
 
 Objects
 k knot.mesh 1.7 0.0 0.02
