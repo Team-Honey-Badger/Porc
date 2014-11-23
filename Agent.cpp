@@ -108,9 +108,9 @@ Agent::getAgentType()
 void
 Agent::update(Ogre::Real deltaTime) 
 {
-	this->updateAnimations(deltaTime);	// Update animation playback
+	this->updateAnimations(deltaTime*10);	// Update animation playback
 	moveTo();							// Find out where to go
-	this->updateLocomote(deltaTime);	// Update Locomotion
+	this->updateLocomote(deltaTime*10);	// Update Locomotion
 }
 
 
@@ -305,6 +305,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
         mBodyNode->setPosition(mDestination);
         mDirection = Ogre::Vector3::ZERO;
 	}
+	moveTo();
 }
 
 void
@@ -326,7 +327,7 @@ Agent::moveTo(){
 				GridNode *northNode = grid->getNorthNode(this->selfNode);
 				mWalkList.push_back(grid->getPosition(northNode->getRow(), northNode->getColumn()));
 				selfNode = northNode;
-				orientation = 0;
+				orientation = getOrientation();
 			}
 			break;
 		case 2:
@@ -335,7 +336,7 @@ Agent::moveTo(){
 				GridNode *southNode = grid->getSouthNode(this->selfNode);
 				mWalkList.push_back(grid->getPosition(southNode->getRow(), southNode->getColumn()));
 				selfNode = southNode;
-				orientation = 0;
+				orientation = getOrientation();
 			}
 			break;
 		case 3:
@@ -344,7 +345,7 @@ Agent::moveTo(){
 				GridNode *eastNode = grid->getEastNode(this->selfNode);
 				mWalkList.push_back(grid->getPosition(eastNode->getRow(), eastNode->getColumn()));
 				selfNode = eastNode;
-				orientation = 0;
+				orientation = getOrientation();
 			}
 			break;
 		case 4:
@@ -353,7 +354,7 @@ Agent::moveTo(){
 				GridNode *westNode = grid->getWestNode(this->selfNode);
 				mWalkList.push_back(grid->getPosition(westNode->getRow(), westNode->getColumn()));
 				selfNode = westNode;
-				orientation = 0;
+				orientation = getOrientation();
 			}
 			break;
 		}
