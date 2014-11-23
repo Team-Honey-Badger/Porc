@@ -317,6 +317,9 @@ Agent::moveTo(){
 			//set new goal
 			current = selfNode;
 			goal = selfNode;
+
+			cout << "self's north node is clear? " << grid->getNorthNode(this->selfNode)->isClear() << endl;
+
 			return;
 		}
 		else{ // no need to find a new goal
