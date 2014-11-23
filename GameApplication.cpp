@@ -390,6 +390,10 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 			}
 		}
     }
+	else if (arg.key == OIS::KC_W)
+	{
+
+	}
    
    //mCameraMan->injectKeyDown(arg);
     return true;
