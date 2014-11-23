@@ -312,31 +312,40 @@ Agent::moveTo(){
 		return;
 	}
 	if(agentType == 'c'){ //if player
-//		switch(this->orientation)
-//		{
-//		case 1:
-//			cout << "selfNode: " << selfNode << std::endl;
-//			cout << "self's north node: " << grid->getNorthNode(selfNode) << std::endl;
-//			/*cout << "self's north node is clear? " << grid->getNorthNode(selfNode)->isClear() << std::endl;*/
-///*			if (grid->getNorthNode(this->selfNode)->isClear() == true && grid->getNorthNode(this->selfNode) != NULL)
-//			{
-//				GridNode *northNode = grid->getNorthNode(this->selfNode);
-//				mWalkList.push_back(grid->getPosition(northNode->getRow(), northNode->getColumn()));
-//			}*/	
-//			break;
-//		case 2:
-//			break;
-//		case 3:
-//			break;
-//		case 4:
-//			break;
-//		}
-		GridNode *north = grid->getNorthNode(selfNode);
-		if(north){ //is null?
-			cout << "north = " << north->getRow() << " , " << north->getColumn() << endl;
-		}
-		else{
-			cout << "north = NULL" << endl;
+		switch(this->orientation)
+		{
+		case 1:
+			if (grid->getNorthNode(this->selfNode) != NULL)
+			{
+				GridNode *northNode = grid->getNorthNode(this->selfNode);
+				mWalkList.push_back(grid->getPosition(northNode->getRow(), northNode->getColumn()));
+				selfNode = northNode;
+			}
+			break;
+		case 2:
+			if (grid->getSouthNode(this->selfNode) != NULL)
+			{
+				GridNode *southNode = grid->getSouthNode(this->selfNode);
+				mWalkList.push_back(grid->getPosition(southNode->getRow(), southNode->getColumn()));
+				selfNode = southNode;
+			}
+			break;
+		case 3:
+			if (grid->getEastNode(this->selfNode) != NULL)
+			{
+				GridNode *eastNode = grid->getEastNode(this->selfNode);
+				mWalkList.push_back(grid->getPosition(eastNode->getRow(), eastNode->getColumn()));
+				selfNode = eastNode;
+			}
+			break;
+		case 4:
+			if (grid->getWestNode(this->selfNode) != NULL)
+			{
+				GridNode *westNode = grid->getWestNode(this->selfNode);
+				mWalkList.push_back(grid->getPosition(westNode->getRow(), westNode->getColumn()));
+				selfNode = westNode;
+			}
+			break;
 		}
 	}
 	if(agentType == 'g'){ //if ghost
