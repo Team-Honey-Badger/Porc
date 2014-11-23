@@ -86,7 +86,8 @@ void
 Agent::update(Ogre::Real deltaTime) 
 {
 	this->updateAnimations(deltaTime);	// Update animation playback
-	this->updateLocomote(deltaTime);	// Update Locomotion
+	if (this->agentType == 'g')
+		this->updateLocomote(deltaTime);	// Update Locomotion
 }
 
 
