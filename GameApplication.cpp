@@ -155,9 +155,6 @@ GameApplication::loadEnv()
 						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
-						//spawn a wooden pallet at the players feet to represent the start (S)
-						grid->loadObject(getNewName(), "WoodPallet.mesh", i, 0.0f, j, 1.0f);
-						grid->getNode(i,j)->setClear();
 
 						// If we were using different characters, we'd have to deal with 
 						// different animation clips. 
@@ -169,9 +166,6 @@ GameApplication::loadEnv()
 						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
-						//spawn a wooden pallet at the players feet to represent the start (S)
-						grid->loadObject(getNewName(), "WoodPallet.mesh", i, 0.0f, j, 1.0f);
-						grid->getNode(i,j)->setClear();
 
 						// If we were using different characters, we'd have to deal with 
 						// different animation clips. 
@@ -181,12 +175,6 @@ GameApplication::loadEnv()
 				{
 					grid->loadObject(getNewName(), rent->filename, i, rent->y, j, rent->scale);
 					
-					//make the goal node walkable so the agent can reach it
-					if (c == 'G'){
-						Gi = i;
-						Gj = j;
-						grid->getNode(i,j)->setClear();
-					}
 				}
 			else // not an object or agent
 			{

@@ -13,6 +13,7 @@ private:
 	int x;
 	int z;
 	bool toggle;
+
 public:
     GameApplication(void);
     virtual ~GameApplication(void);
