@@ -14,6 +14,7 @@ G WoodPallet.mesh 0.0 0.0 1
 
 Characters
 s sinbad.mesh 10.0 2 c
+g sinbad.mesh 10.0 2 g
 
 
 World

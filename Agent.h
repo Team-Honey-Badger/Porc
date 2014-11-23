@@ -78,6 +78,9 @@ public:
 
 	void setPosition(float x, float y, float z);
 
+	void setOrientation(int orientation);
+	int getOrientation();
+
 	void update(Ogre::Real deltaTime);		// update the agent
 	
 	void setBaseAnimation(AnimID id, bool reset = false);	// choose animation to display
