@@ -369,18 +369,18 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     {
         mShutDown = true;
     }
-	//press space to trigger bots to move to a random point
-	//the destination goes into their queue
-	else if (arg.key == OIS::KC_SPACE)
-    {
-		//tell every agent to move!
-        std::list<Agent*>::iterator iter;
-		for (iter = agentList.begin(); iter != agentList.end(); iter++){
-			if (*iter != NULL){
-				(*iter)->moveTo();
-			}
-		}
-    }
+	////press space to trigger bots to move to a random point
+	////the destination goes into their queue
+	//else if (arg.key == OIS::KC_SPACE)
+ //   {
+	//	//tell every agent to move!
+ //       std::list<Agent*>::iterator iter;
+	//	for (iter = agentList.begin(); iter != agentList.end(); iter++){
+	//		if (*iter != NULL){
+	//			(*iter)->moveTo();
+	//		}
+	//	}
+ //   }
 	else if (arg.key == OIS::KC_W)
 	{
 		agent->setOrientation(1);
