@@ -437,7 +437,6 @@ Agent::moveTo(){
 			//break if it reached the goal
 			if( current->getRow() == goal->getRow() && current->getColumn() == goal->getColumn() ){
 			
-				int numChar;
 				int counter = 0;
 			
 				//set up counter to count backwards
