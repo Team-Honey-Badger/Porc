@@ -7,8 +7,8 @@
 class GameApplication : public BaseApplication
 {
 private:
-	Agent* agent; // store a pointer to the character
-	std::list<Agent*> agentList; // Lecture 5: now a list of agents
+	Agent* agent; // character
+	std::list<Agent*> agentList; // ghosts
 	//grid size variables
 	int x;
 	int z;
