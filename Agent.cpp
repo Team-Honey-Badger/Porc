@@ -244,11 +244,8 @@ Agent::fadeAnimations(Ogre::Real deltaTime)
 bool 
 Agent::nextLocation()
 {
-	if (mWalkList.empty())
-	return false;
-
-	else
-	return true;
+	//check if there is another location
+	return !mWalkList.empty();
 }
 
 void 
