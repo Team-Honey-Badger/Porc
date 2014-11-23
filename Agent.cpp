@@ -14,6 +14,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	goalNode = new GridNode(-1, 4, 8, true);
 	toggle = true;
 	this->agentType = type;
+	orientation = 0;
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
