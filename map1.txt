@@ -13,7 +13,6 @@ x cube.mesh 0.0 0.0 0.0
 G WoodPallet.mesh 0.0 0.0 1
 
 Characters
-g sinbad.mesh 10.0 2 g
 c sinbad.mesh 10.0 2 c
 
 World

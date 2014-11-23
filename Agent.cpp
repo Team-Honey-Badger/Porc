@@ -247,10 +247,7 @@ Agent::nextLocation()
 	if (mWalkList.empty())
 	return false;
 
-	mDestination = mWalkList.front();
-	mWalkList.pop_front();
-	mDirection = mDestination - mBodyNode->getPosition();
-	mDistance = mDirection.normalise();
+	else
 	return true;
 }
 
