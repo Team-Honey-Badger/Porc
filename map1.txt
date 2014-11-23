@@ -19,7 +19,7 @@ g sinbad.mesh 10.0 2 g
 World
 
 wwwwwwwwwwwwwwwwwww
-woooooooowoooooooow
+woGoooooowoooooooow
 wowwowwwowowwwowwow
 wooooooooooooooooow
 wowwowowwwwwowowwow
@@ -27,14 +27,14 @@ woooowooowooowoooow
 wwwwowwwowowwwowwww
 ooowowooooooowowooo
 wwwwowowwowwowowwww
-ooooooowogowooooooo
+ooooooowooowooooooo
 wwwwowowwwwwowowwww
 ooowowooooooowowooo
 wwwwowwwowowwwowwww
-wgooowooowooowoooow
-wowwwowwwwwowowwwow
+woooowooowooowoooow
+wowwowowwwwwowowwow
 wooooooooooooooooow
 wowwowwwowowwwowwow
-woooooooowoooooooow
+wooooosoowoooooooow
 wwwwwwwwwwwwwwwwwww
 
