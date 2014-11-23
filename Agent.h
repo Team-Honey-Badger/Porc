@@ -16,6 +16,7 @@ private:
 	float height;						// height the character should be moved up
 	float scale;						// scale of character from original model
 	char agentType;
+	int orientation;					//determines the direction/orientation of the character
 
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
@@ -72,6 +73,9 @@ private:
 public:
 	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type);
 	~Agent();
+
+	bool isFirstPosSet; //is the first position set, used for setting up initial position
+
 	void setPosition(float x, float y, float z);
 
 	void update(Ogre::Real deltaTime);		// update the agent
@@ -80,7 +84,6 @@ public:
 	void setTopAnimation(AnimID id, bool reset = false);
 
 	void moveTo(); //move to a new position
-	bool isFirstPosSet; //is the first position set, used for setting up initial position
 
 	//setters for GridNodes
 	void setSelfNode(int r, int c);
