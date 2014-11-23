@@ -383,14 +383,14 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_W)
 	{
-		std::list<Agent*>::iterator iter;
-		Agent *charAgent = NULL;
-		for (iter = agentList.begin(); iter != agentList.end(); iter++)
-		{
-			if ((*iter)->getAgentType() == 'c')
-				charAgent = (*iter);
-
-		}
+		//Agent *charAgent = NULL;
+		//std::list<Agent*>::iterator iter;
+		//for (iter = agentList.begin(); iter != agentList.end(); iter++)
+		//{
+		//	if ((*iter)->getAgentType() == 'c')
+		//		charAgent = (*iter);
+		//}
+		////charAgent->setOrientation(1);
 	}
 	else if (arg.key == OIS::KC_S)
 	{
