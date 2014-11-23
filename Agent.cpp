@@ -311,8 +311,7 @@ Agent::moveTo(){
 		case 1:
 			cout << "selfNode: " << selfNode << std::endl;
 			cout << "self's north node: " << grid->getNorthNode(selfNode) << std::endl;
-			/*cout << "self's north node is clear? " << grid->getNorthNode(selfNode)->isClear() << std::endl;*/
-/*			if (grid->getNorthNode(this->selfNode)->isClear() == true && grid->getNorthNode(this->selfNode) != NULL)
+/*			if (grid->getNorthNode(this->selfNode) != NULL)
 			{
 				GridNode *northNode = grid->getNorthNode(this->selfNode);
 				mWalkList.push_back(grid->getPosition(northNode->getRow(), northNode->getColumn()));
