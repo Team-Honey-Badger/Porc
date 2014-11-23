@@ -158,7 +158,7 @@ GameApplication::loadEnv()
 						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
-
+						player = agent;
 						// If we were using different characters, we'd have to deal with 
 						// different animation clips. 
 					}
@@ -383,23 +383,19 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_W)
 	{
-		Agent *tempAgent = agentList.back();
-		tempAgent->setOrientation(1);
+		player->setOrientation(1);
 	}
 	else if (arg.key == OIS::KC_S)
 	{
-		Agent *tempAgent = agentList.back();
-		tempAgent->setOrientation(2);
+		player->setOrientation(2);
 	}
 	else if (arg.key == OIS::KC_D)
 	{
-		Agent *tempAgent = agentList.back();
-		tempAgent->setOrientation(3);
+		player->setOrientation(3);
 	}
 	else if (arg.key == OIS::KC_A)
 	{
-		Agent *tempAgent = agentList.back();
-		tempAgent->setOrientation(4);
+		player->setOrientation(4);
 	}
    
    //mCameraMan->injectKeyDown(arg);

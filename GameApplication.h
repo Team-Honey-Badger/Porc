@@ -7,8 +7,9 @@
 class GameApplication : public BaseApplication
 {
 private:
-	Agent* agent; // character
-	std::list<Agent*> agentList; // ghosts
+	Agent* player; //player
+	Agent* agent; // a agent
+	std::list<Agent*> agentList; //the agentList (holds the ghosts and the player)
 	//grid size variables
 	int x;
 	int z;
