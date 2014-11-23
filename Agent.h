@@ -66,6 +66,8 @@ private:
 	bool nextLocation();					// Is there another destination?
 	void updateLocomote(Ogre::Real deltaTime);			// update the character's walking
 
+	std::vector<GridNode*> intersections;	// list of intersections
+
 	//////////////////////////////////////////////
 	// Lecture 4
 	bool procedural;						// Is this character performing a procedural animation
@@ -91,7 +93,7 @@ public:
 	//setters for GridNodes
 	void setSelfNode(int r, int c);
 	void setStartNode(int r, int c);
-	void setGoalNode(int r, int c);
+	void setGoalNode();
 };
 
 #endif

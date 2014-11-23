@@ -359,3 +359,11 @@ Grid::eraseContains(){
 		}
 	}
 }
+
+int Grid::getRowNum(){
+	return nRows;
+}
+
+int Grid::getColNum(){
+	return nCols;
+}

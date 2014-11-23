@@ -47,6 +47,9 @@ std::string getNewName() // return a unique name
 void // Load the buildings or ground plane, etc
 GameApplication::loadEnv()
 {
+	//seed random
+	srand(time(0));
+
 	using namespace Ogre;	// use both namespaces
 	using namespace std;
 
@@ -61,8 +64,8 @@ GameApplication::loadEnv()
 		char type;
 	};
 
-	//for saving goal coodinates
-	int Gi = -1, Gj = -1;
+	////for saving goal coodinates
+	//int Gi = -1, Gj = -1;
 
 	ifstream inputfile;		// Holds a pointer into the file
 
@@ -213,16 +216,16 @@ GameApplication::loadEnv()
 
 	//if a goal was initilized on the level file, then give it to all agents
 	//there is a default goal set just in case
-	if(Gi != -1){
+	/*if(Gi != -1){
 		std::list<Agent*>::iterator iter;
 		for (iter = agentList.begin(); iter != agentList.end(); iter++){
 			if (*iter != NULL){
 				(*iter)->setGoalNode(Gi, Gj);
 			}
 		}
-	}
+	}*/
 
-	grid->printToFile(); // see what the initial grid looks like.
+	//grid->printToFile(); // see what the initial grid looks like.
 }
 
 void // Set up lights, shadows, etc

@@ -74,6 +74,9 @@ public:
 	Ogre::Vector3 getPosition(int r, int c);	// return the position  
 
 	void eraseContains(); //erases the last path from grid.txt
+
+	int getRowNum();
+	int getColNum();
 };
 
 #endif

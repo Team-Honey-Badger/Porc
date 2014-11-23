@@ -15,12 +15,6 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	toggle = true;
 	this->agentType = type;
 
-	if(agentType == 'g'){
-		//make a list of intersections
-		GridNode *temp = grid->getNode(0,0);
-		goalNode = temp;
-	}
-
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
 	if (mSceneMgr == NULL)
@@ -69,9 +63,9 @@ Agent::setStartNode(int r, int c){
 }
 
 void
-Agent::setGoalNode(int r, int c){
-	delete goalNode; //free the default node
-	goalNode = grid->getNode(r,c);
+Agent::setGoalNode(){
+	std::random_shuffle(intersections.begin(), intersections.end());
+	goalNode = intersections.at(0);
 	goalNode->parent = NULL;
 }
 
@@ -307,10 +301,11 @@ void
 Agent::moveTo(){
 	using namespace std;
 	
-	//quit if previous A* is in progress
-	if(nextLocation()){
-		return;
-	}
+	////quit if previous A* is in progress
+	//if(nextLocation()){
+	//	return;
+	//}
+
 	if(agentType == 'c'){ //if player
 		switch(this->orientation)
 		{
@@ -349,19 +344,46 @@ Agent::moveTo(){
 		}
 	}
 	if(agentType == 'g'){ //if ghost
+
+		if(intersections.size() == 0){
+			//make a list of intersections
+			GridNode *temp; int x = 0;
+			for(int i = 0; i < grid->getColNum(); i++){
+				for(int j = 0; j < grid->getRowNum(); j++){
+					temp = grid->getNode(i,j);
+					if(temp){ //if not null
+						if(temp->isClear()){
+							//if there is a turn at this grid node
+							if( (grid->getNorthNode(temp) && grid->getEastNode(temp) ) || (grid->getNorthNode(temp) && grid->getWestNode(temp) )  
+								|| (grid->getSouthNode(temp) && grid->getEastNode(temp)) || (grid->getSouthNode(temp) && grid->getWestNode(temp)) )
+							{
+								x++;
+								intersections.push_back(temp);
+							}
+						}
+					}
+				}
+			}
+			std::cout << x << std::endl;
+		}
+
+
+
+
+
+
+
 		//set start and goal
 		GridNode *current;
 		GridNode *goal;
 
-		if( goalNode->getRow() == selfNode->getRow() && goalNode->getColumn() == selfNode->getColumn() ){ // has goal been reached?
-			//set new goal
+		if(mWalkList.empty()){ //is ghost walking to a goal?
 			current = selfNode;
-			goal = selfNode;
-
-			//return;
+			setGoalNode();
+			goal = goalNode;
 		}
-		else{ // no need to find a new goal
-			return;
+		else{
+			return; //return if still in route to goal
 		}
 
 
