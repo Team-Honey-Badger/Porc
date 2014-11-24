@@ -38,6 +38,7 @@ public:
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	////////////////////////////////////////////////////////////////////////////
 
+	Ogre::AxisAlignedBox targetHitBox; //barrel's hit box
 
 protected:
     virtual void createScene(void);

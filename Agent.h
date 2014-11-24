@@ -75,6 +75,10 @@ private:
 	// Lecture 4
 	bool procedural;						// Is this character performing a procedural animation
     //////////////////////////////////////////////
+
+	//pointer to the target's hitbox
+	Ogre::AxisAlignedBox *targetHitBox;
+
 public:
 	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type);
 	~Agent();
@@ -99,6 +103,7 @@ public:
 	void setSelfNode(int r, int c);
 	void setStartNode(int r, int c);
 	void setGoalNode();
+
 };
 
 #endif
