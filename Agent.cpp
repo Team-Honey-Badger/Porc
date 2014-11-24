@@ -194,7 +194,7 @@ Agent::setupAnimations()
 		mBodyEntity->setMaterialName("Examples/Hilite/Yellow"); //pacman is yellow
 	}
 	else if(agentType == 'x'){
-		mBodyEntity->setMaterialName("Examples/MorningSkyBox");
+		mBodyEntity->setMaterialName("Examples/MorningSkyBox"); //looks right...
 	}
 }
 
