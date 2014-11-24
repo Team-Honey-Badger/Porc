@@ -314,15 +314,16 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 	//}
 
 	//teleportation
-	Ogre::Real teleportation = 999;
-	if(agentType == 'c'){
+	//move agent across the map at a speed to high to see when reaching the end of the map
+	Ogre::Real teleportation = 999; //move speed while teleporting
+	if(agentType == 'c'){ //works only for the player
 		if(selfNode->getColumn() == 0 && selfNode->getRow() == 9){
 			mBodyNode->setPosition(grid->getPosition(9,17));
 			selfNode = grid->getNode(9, 17);
 			mWalkList.clear();
 			toggle = !toggle;
 			telecount = 1;
-			std::cout<<toggle<<std::endl;
+			//std::cout<<toggle<<std::endl;
 		}
 		else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
 			mBodyNode->setPosition(grid->getPosition(9,1));
@@ -330,7 +331,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 			mWalkList.clear();
 			toggle = !toggle;
 			telecount = 1;
-			std::cout<<toggle<<std::endl;
+			//std::cout<<toggle<<std::endl;
 		}
 		else{
 			if(!toggle)
