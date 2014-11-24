@@ -173,8 +173,7 @@ Agent::setupAnimations()
 	//color the agents!
 	if(agentType == 'g'){
 		gID++; //count Ghosts
-		std::cout << gID << std::endl;
-		switch(gID){
+		switch(gID){ //turns out this had no point, but just in case we ever want to have different ghost colors...
 		case 1:
 			mBodyEntity->setMaterialName("Examples/Flare"); //looks like an actual ghost!
 			break;
@@ -195,7 +194,7 @@ Agent::setupAnimations()
 		mBodyEntity->setMaterialName("Examples/Hilite/Yellow"); //pacman is yellow
 	}
 	else if(agentType == 'x'){
-		mBodyEntity->setMaterialName("Examples/Fish");
+		mBodyEntity->setMaterialName("Examples/MorningSkyBox");
 	}
 }
 
