@@ -97,6 +97,10 @@ Agent::setOrientation(int orientation)
 	this->orientation = orientation;
 }
 
+void Agent::setID(int x){
+	gID = x;
+}
+
 int
 Agent::getOrientation()
 {
@@ -164,6 +168,34 @@ Agent::setupAnimations()
 
 		// relax the hands since we're not holding anything
 		mAnims[ANIM_HANDS_RELAXED]->setEnabled(true);
+	}
+
+	//color the agents!
+	if(agentType == 'g'){
+		gID++; //count Ghosts
+		std::cout << gID << std::endl;
+		switch(gID){
+		case 1:
+			mBodyEntity->setMaterialName("Examples/Flare"); //looks like an actual ghost!
+			break;
+		case 2:
+			mBodyEntity->setMaterialName("Examples/Flare");
+			break;
+		case 3:
+			mBodyEntity->setMaterialName("Examples/Flare");
+			break;
+		case 4:
+			mBodyEntity->setMaterialName("Examples/Flare");
+			break;
+		default:
+			mBodyEntity->setMaterialName("Examples/Rocky");
+		}
+	}
+	else if(agentType == 'c'){
+		mBodyEntity->setMaterialName("Examples/Hilite/Yellow"); //pacman is yellow
+	}
+	else if(agentType == 'x'){
+		mBodyEntity->setMaterialName("Examples/Fish");
 	}
 }
 
@@ -642,3 +674,5 @@ Agent::moveTo(){
 		}
 	}
 }
+
+int Agent::gID = 0;

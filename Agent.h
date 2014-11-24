@@ -18,6 +18,7 @@ private:
 	char agentType;
 	int orientation;					//determines the direction/orientation of the character
 	int defaultOrientation;				//character keeps default orientation until able to adapt new one
+	static int gID;						//number each ghost
 
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
@@ -103,7 +104,7 @@ public:
 	void setSelfNode(int r, int c);
 	void setStartNode(int r, int c);
 	void setGoalNode();
-
+	void setID(int x);
 };
 
 #endif
