@@ -10,8 +10,9 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 
 	//initialize GridNodes
 	selfNode = NULL;
-	startNode = new GridNode(-1, 4, 1, true);
-	goalNode = new GridNode(-1, 4, 8, true);
+	startNode = new GridNode(-1, 0, 0, true);
+	goalNode = new GridNode(-1, 0, 0, true);
+	prev = new GridNode(-1, 0, 0, true);
 	toggle = true;
 	this->agentType = type;
 	orientation = 0;
@@ -68,13 +69,15 @@ Agent::setStartNode(int r, int c){
 
 void
 Agent::setGoalNode(){
-	GridNode *prev;
+	//GridNode *temp = goalNode;
 	do{
-		prev = goalNode;
 		std::random_shuffle(intersections.begin(), intersections.end());
 		goalNode = intersections.at(0);
 
-	}while(grid->getDistance(goalNode, selfNode) > 5 || prev == goalNode);
+	}while( grid->getDistance(goalNode, selfNode) > 5 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );
+	/*std::cout<<prev->getColumn()<<","<<prev->getRow()<<" != "<<goalNode->getColumn()<<","<<goalNode->getRow()<<std::endl;
+	Sleep(1000);*/
+	prev = selfNode;
 	goalNode->parent = NULL;
 }
 
@@ -318,7 +321,7 @@ Agent::moveTo(){
 	//PLAYER
 	if(agentType == 'c'){
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
-
+			//cout<<selfNode->getRow()<<" , "<<selfNode->getColumn()<<endl;
 			//wait until a turn comes up before switching directions
 			switch(orientation)
 			{
@@ -385,7 +388,7 @@ Agent::moveTo(){
 
 		if(intersections.size() == 0){
 			//make a list of intersections
-			GridNode *temp; int x = 0;
+			GridNode *temp;
 			for(int i = 0; i < grid->getColNum(); i++){
 				for(int j = 0; j < grid->getRowNum(); j++){
 					temp = grid->getNode(i,j);
@@ -395,14 +398,14 @@ Agent::moveTo(){
 							if( (grid->getNorthNode(temp) && grid->getEastNode(temp) ) || (grid->getNorthNode(temp) && grid->getWestNode(temp) )  
 								|| (grid->getSouthNode(temp) && grid->getEastNode(temp)) || (grid->getSouthNode(temp) && grid->getWestNode(temp)) )
 							{
-								x++;
 								intersections.push_back(temp);
 							}
 						}
 					}
 				}
 			}
-			std::cout << x << std::endl;
+			intersections.push_back(grid->getNode(9,0));
+			intersections.push_back(grid->getNode(9,18));
 		}
 
 
@@ -452,13 +455,13 @@ Agent::moveTo(){
 			//add new and clear adjacent nodes to open list
 			temp.clear(); //clear previous neighbors
 			temp.push_front(grid->getEastNode(current));
-			temp.push_front(grid->getNENode(current));
+			//temp.push_front(grid->getNENode(current));
 			temp.push_front(grid->getNorthNode(current));
-			temp.push_front(grid->getNWNode(current));
+			//temp.push_front(grid->getNWNode(current));
 			temp.push_front(grid->getWestNode(current));
-			temp.push_front(grid->getSWNode(current));
+			//temp.push_front(grid->getSWNode(current));
 			temp.push_front(grid->getSouthNode(current));
-			temp.push_front(grid->getSENode(current));
+			//temp.push_front(grid->getSENode(current));
 			for(list<GridNode*>::iterator j = temp.begin(); j != temp.end(); j++){
 				if((*j) != NULL){
 					inClosed = false;
@@ -490,9 +493,9 @@ Agent::moveTo(){
 				H = 10 * grid->getDistance((*i), goal);
 				//find movement cost
 				G = 10 * grid->getDistance(current, (*i));
-				if( G = 20 ){
-					G = 14; //compensate for diagonals
-				}
+				//if( G = 20 ){
+				//	G = 14; //compensate for diagonals
+				//}
 				//add up total
 				F = G + H;
 
@@ -510,7 +513,7 @@ Agent::moveTo(){
 				for(list<GridNode*>::reverse_iterator i = closed.rbegin(); i != closed.rend(); i++){
 					if((*i) != current){
 						//if one of the parent nodes is adjacent to the selected node
-						if( ( abs( (*i)->getRow()-bestN->getRow() ) <= 1) && ( abs( (*i)->getColumn()-bestN->getColumn() ) <= 1) ){
+						if( grid->getDistance((*i), bestN) == 1){
 							//bring current back to it and restart the closed list from here
 							current = (*i);
 							break;

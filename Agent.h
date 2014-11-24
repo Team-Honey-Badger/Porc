@@ -22,7 +22,8 @@ private:
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
 	GridNode *startNode;
-	GridNode *goalNode;
+	GridNode *goalNode;	//where agent wants to go
+	GridNode *prev;		//where agent was last time
 	bool toggle; //toggle between S and G
 
 	// all of the animations our character has, and a null ID
