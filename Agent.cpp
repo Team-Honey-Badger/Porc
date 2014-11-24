@@ -13,9 +13,10 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	startNode = new GridNode(-1, 0, 0, true);
 	goalNode = new GridNode(-1, 0, 0, true);
 	prev = new GridNode(-1, 0, 0, true);
-	toggle = true;
+	toggle = false;
 	this->agentType = type;
 	orientation = 0;
+	telecount = 0;
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
@@ -69,15 +70,12 @@ Agent::setStartNode(int r, int c){
 
 void
 Agent::setGoalNode(){
-	//GridNode *temp = goalNode;
 	do{
+		//select a random interestion to walk to
 		std::random_shuffle(intersections.begin(), intersections.end());
 		goalNode = intersections.at(0);
-
-	}while( grid->getDistance(goalNode, selfNode) > 5 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );
-	/*std::cout<<prev->getColumn()<<","<<prev->getRow()<<" != "<<goalNode->getColumn()<<","<<goalNode->getRow()<<std::endl;
-	Sleep(1000);*/
-	prev = selfNode;
+	}while( grid->getDistance(goalNode, selfNode) > 5 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//make sure it's close (more random movement) and not your pevious spot
+	prev = selfNode;	//save current location as previous spot
 	goalNode->parent = NULL;
 }
 
@@ -116,8 +114,8 @@ void
 Agent::update(Ogre::Real deltaTime) 
 {
 	this->updateAnimations(deltaTime);	// Update animation playback
-	moveTo();							// Find out where to go
 	this->updateLocomote(deltaTime);	// Update Locomotion
+	moveTo();							// Find out where to go	
 }
 
 
@@ -258,10 +256,96 @@ Agent::nextLocation()
 void 
 Agent::updateLocomote(Ogre::Real deltaTime)
 {
+	////teleportation
+	////Ogre::Real teletime = 0.1;
+	//Ogre::Real teleportation = 1;
+	//if(selfNode->getColumn() == 1 && selfNode->getRow() == 9){
+	//	selfNode = grid->getNode(9, 16);
+	//	telecount--;
+	//	telecount = 1;
+	//	if(telecount < 1){
+	//		toggle = !toggle;
+	//		if(agentType == 'c')
+	//			std::cout<<"left: "<<toggle<<std::endl;
+	//	}
+	//	//toggle = true;
+	//	//toggle = !toggle;
+	//	//mWalkList.clear();
+	//	//mWalkList.push_front(grid->getPosition(9,17));
+	//	//telecount = teletime;
+	//}
+	///*else if(selfNode->getColumn() == 2 && selfNode->getRow() == 9){
+	//	if(telecount < 1){
+	//		toggle = !toggle;
+	//		if(agentType == 'c')
+	//			std::cout<<"left: "<<toggle<<std::endl;
+	//	}
+	//	telecount--;
+	//}*/
+	//else if(selfNode->getColumn() == 17 && selfNode->getRow() == 9){
+	//	selfNode = grid->getNode(9, 2);
+	//	telecount--;
+	//	telecount = 1;
+	//	if(telecount < 1){
+	//		toggle = !toggle;
+	//		if(agentType == 'c')
+	//			std::cout<<"right: "<<toggle<<std::endl;
+	//	}
+	//	//toggle = true;
+	//	//toggle = !toggle;
+	//	//mWalkList.clear();
+	//	//mWalkList.push_front(grid->getPosition(9,1));
+	//	//telecount = teletime;
+	//}
+	///*else if(selfNode->getColumn() == 16 && selfNode->getRow() == 9){
+	//	if(telecount < 1){
+	//		toggle = !toggle;
+	//		if(agentType == 'c')
+	//			std::cout<<"right: "<<toggle<<std::endl;
+	//	}
+	//	telecount--;
+	//}*/
+	//if(!toggle){
+	//	teleportation = 1;
+	//	//if(telecount <= 0){
+	//	/*if(){
+	//		teleportation = 1;
+	//	}*/
+	//}
+
+	//teleportation
+	Ogre::Real teleportation = 999;
+	if(selfNode->getColumn() == 0 && selfNode->getRow() == 9){
+		mBodyNode->setPosition(grid->getPosition(9,17));
+		selfNode = grid->getNode(9, 17);
+		mWalkList.clear();
+		toggle = !toggle;
+		telecount = 1;
+		std::cout<<toggle<<std::endl;
+	}
+	else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
+		mBodyNode->setPosition(grid->getPosition(9,1));
+		selfNode = grid->getNode(9, 1);
+		mWalkList.clear();
+		toggle = !toggle;
+		telecount = 1;
+		std::cout<<toggle<<std::endl;
+	}
+	else{
+		if(!toggle)
+			teleportation = 1;
+	}
+
 	if (mDirection == Ogre::Vector3::ZERO) 
     {
         if (nextLocation()) 
         {
+			if(telecount == 0){
+				toggle = false;
+			}
+			else{
+				telecount = 0;
+			}
             //set to running animation
 			if(mBaseAnimID != ANIM_RUN_BASE){ // stay in running if already in running (avoids T-pose issue)
 				setBaseAnimation(ANIM_RUN_BASE);
@@ -301,9 +385,12 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 	else
 	{
 		//move model
-		Ogre::Real move = mWalkSpeed * deltaTime;
+		Ogre::Real move = mWalkSpeed * deltaTime * teleportation;
 		mBodyNode->translate(mDirection * move);
 		mDistance -= move;
+		/*if(telecount > 0){
+			telecount -= deltaTime;
+		}*/
 	}
 
 	if (mDistance <= 0.0f)
@@ -320,6 +407,7 @@ Agent::moveTo(){
 
 	//PLAYER
 	if(agentType == 'c'){
+
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//cout<<selfNode->getRow()<<" , "<<selfNode->getColumn()<<endl;
 			//wait until a turn comes up before switching directions

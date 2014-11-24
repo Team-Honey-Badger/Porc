@@ -381,19 +381,19 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 	//		}
 	//	}
  //   }
-	else if (arg.key == OIS::KC_W)
+	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
 		player->setOrientation(1);
 	}
-	else if (arg.key == OIS::KC_S)
+	else if (arg.key == OIS::KC_S || arg.key == OIS::KC_DOWN)
 	{
 		player->setOrientation(2);
 	}
-	else if (arg.key == OIS::KC_D)
+	else if (arg.key == OIS::KC_D || arg.key == OIS::KC_RIGHT)
 	{
 		player->setOrientation(3);
 	}
-	else if (arg.key == OIS::KC_A)
+	else if (arg.key == OIS::KC_A || arg.key == OIS::KC_LEFT)
 	{
 		player->setOrientation(4);
 	}
