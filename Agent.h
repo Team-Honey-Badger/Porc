@@ -71,6 +71,8 @@ private:
 
 	std::vector<GridNode*> intersections;	// list of intersections
 
+	void collide(Ogre::Real deltaTime);		//tests collision detection between player and ghosts
+
 	//////////////////////////////////////////////
 	// Lecture 4
 	bool procedural;						// Is this character performing a procedural animation

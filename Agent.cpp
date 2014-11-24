@@ -642,3 +642,11 @@ Agent::moveTo(){
 		}
 	}
 }
+
+void
+Agent::collide(Ogre::Real deltaTime)
+{
+	Ogre::AxisAlignedBox PlayerBox = this->mBodyEntity->getWorldBoundingBox(true); //the AABB of the player
+
+	
+}
