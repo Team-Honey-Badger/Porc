@@ -315,25 +315,30 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 
 	//teleportation
 	Ogre::Real teleportation = 999;
-	if(selfNode->getColumn() == 0 && selfNode->getRow() == 9){
-		mBodyNode->setPosition(grid->getPosition(9,17));
-		selfNode = grid->getNode(9, 17);
-		mWalkList.clear();
-		toggle = !toggle;
-		telecount = 1;
-		std::cout<<toggle<<std::endl;
-	}
-	else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
-		mBodyNode->setPosition(grid->getPosition(9,1));
-		selfNode = grid->getNode(9, 1);
-		mWalkList.clear();
-		toggle = !toggle;
-		telecount = 1;
-		std::cout<<toggle<<std::endl;
+	if(agentType == 'c'){
+		if(selfNode->getColumn() == 0 && selfNode->getRow() == 9){
+			mBodyNode->setPosition(grid->getPosition(9,17));
+			selfNode = grid->getNode(9, 17);
+			mWalkList.clear();
+			toggle = !toggle;
+			telecount = 1;
+			std::cout<<toggle<<std::endl;
+		}
+		else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
+			mBodyNode->setPosition(grid->getPosition(9,1));
+			selfNode = grid->getNode(9, 1);
+			mWalkList.clear();
+			toggle = !toggle;
+			telecount = 1;
+			std::cout<<toggle<<std::endl;
+		}
+		else{
+			if(!toggle)
+				teleportation = 1;
+		}
 	}
 	else{
-		if(!toggle)
-			teleportation = 1;
+		teleportation = 1;
 	}
 
 	if (mDirection == Ogre::Vector3::ZERO) 
