@@ -379,8 +379,17 @@ void
 Agent::moveTo(){
 	using namespace std;
 
+	//BARREL
+	if(agentType == 'x'){
+		if(selfNode->getID() == 3){
+			mBodyNode->setVisible(false);
+		}
+	}
+
 	//PLAYER
 	if(agentType == 'c'){
+
+		selfNode->setID(3);	//note that you walked here
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//cout<<selfNode->getRow()<<" , "<<selfNode->getColumn()<<endl;

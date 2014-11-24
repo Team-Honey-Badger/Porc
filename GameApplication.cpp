@@ -183,6 +183,7 @@ GameApplication::loadEnv()
 						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
+						grid->getNode(i,j)->setID(2);
 					}
 				}
 				else	// Load objects
