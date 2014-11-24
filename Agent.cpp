@@ -256,63 +256,6 @@ Agent::nextLocation()
 void 
 Agent::updateLocomote(Ogre::Real deltaTime)
 {
-	////teleportation
-	////Ogre::Real teletime = 0.1;
-	//Ogre::Real teleportation = 1;
-	//if(selfNode->getColumn() == 1 && selfNode->getRow() == 9){
-	//	selfNode = grid->getNode(9, 16);
-	//	telecount--;
-	//	telecount = 1;
-	//	if(telecount < 1){
-	//		toggle = !toggle;
-	//		if(agentType == 'c')
-	//			std::cout<<"left: "<<toggle<<std::endl;
-	//	}
-	//	//toggle = true;
-	//	//toggle = !toggle;
-	//	//mWalkList.clear();
-	//	//mWalkList.push_front(grid->getPosition(9,17));
-	//	//telecount = teletime;
-	//}
-	///*else if(selfNode->getColumn() == 2 && selfNode->getRow() == 9){
-	//	if(telecount < 1){
-	//		toggle = !toggle;
-	//		if(agentType == 'c')
-	//			std::cout<<"left: "<<toggle<<std::endl;
-	//	}
-	//	telecount--;
-	//}*/
-	//else if(selfNode->getColumn() == 17 && selfNode->getRow() == 9){
-	//	selfNode = grid->getNode(9, 2);
-	//	telecount--;
-	//	telecount = 1;
-	//	if(telecount < 1){
-	//		toggle = !toggle;
-	//		if(agentType == 'c')
-	//			std::cout<<"right: "<<toggle<<std::endl;
-	//	}
-	//	//toggle = true;
-	//	//toggle = !toggle;
-	//	//mWalkList.clear();
-	//	//mWalkList.push_front(grid->getPosition(9,1));
-	//	//telecount = teletime;
-	//}
-	///*else if(selfNode->getColumn() == 16 && selfNode->getRow() == 9){
-	//	if(telecount < 1){
-	//		toggle = !toggle;
-	//		if(agentType == 'c')
-	//			std::cout<<"right: "<<toggle<<std::endl;
-	//	}
-	//	telecount--;
-	//}*/
-	//if(!toggle){
-	//	teleportation = 1;
-	//	//if(telecount <= 0){
-	//	/*if(){
-	//		teleportation = 1;
-	//	}*/
-	//}
-
 	//teleportation
 	//move agent across the map at a speed to high to see when reaching the end of the map
 	Ogre::Real teleportation = 999; //move speed while teleporting
