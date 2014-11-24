@@ -159,8 +159,6 @@ GameApplication::loadEnv()
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
 						player = agent;
-						// If we were using different characters, we'd have to deal with 
-						// different animation clips. 
 					}
 					if (rent->type == 'g')
 					{
@@ -169,9 +167,22 @@ GameApplication::loadEnv()
 						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
 						agent->setSelfNode(i, j);
 						agent->setStartNode(i, j);
-
-						// If we were using different characters, we'd have to deal with 
-						// different animation clips. 
+					}
+					if (rent->type == 'p')
+					{
+						agent = new Agent(this->mSceneMgr, getNewName(), rent->filename, rent->y, rent->scale, grid, rent->type);
+						agentList.push_back(agent);
+						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
+						agent->setSelfNode(i, j);
+						agent->setStartNode(i, j);
+					}
+					if (rent->type == 'x')
+					{
+						agent = new Agent(this->mSceneMgr, getNewName(), rent->filename, rent->y, rent->scale, grid, rent->type);
+						agentList.push_back(agent);
+						agent->setPosition(grid->getPosition(i,j).x, rent->y, grid->getPosition(i,j).z);
+						agent->setSelfNode(i, j);
+						agent->setStartNode(i, j);
 					}
 				}
 				else	// Load objects

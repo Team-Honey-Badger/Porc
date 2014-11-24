@@ -15,26 +15,28 @@ G WoodPallet.mesh 0.0 0.0 1
 Characters
 c sinbad.mesh 10.0 2 c
 g sinbad.mesh 10.0 2 g
+x Barrel.mesh 10.0 1 x
+p sinbad.mesh 10.0 2 p
 
 World
 
 wwwwwwwwwwwwwwwwwww
-woooooooowoooooooow
-wowwowwwowowwwowwow
-wooooooooooooooooow
-wowwowowwwwwowowwow
-woooowooowooowoooow
-wwwwowwwowowwwowwww
-ooowowooooooowowooo
-wwwwowowwgwwowowwww
-ooooooowgggwooooooo
-wwwwowowwwwwowowwww
-ooowowooocooowowooo
-wwwwowwwowowwwowwww
-woooowooowooowoooow
-wowwowowwwwwowowwow
-wooooooooooooooooow
-wowwowwwowowwwowwow
-woooooooowoooooooow
+woxxxxxxxwxxxxxxxow
+wxwwxwwwxwxwwwxwwxw
+wxxxxxxxxxxxxxxxxxw
+wxwwxwxwwwwwxwxwwxw
+wxxxxwxxxwxxxwxxxxw
+wwwwxwwwxwxwwwxwwww
+xxxwxwxxxxxxxwxwxxx
+wwwwxwxwwgwwxwxwwww
+xxxxxxxwgggwxxxxxxx
+wwwwxwxwwwwwxwxwwww
+xxxwxwxxxcxxxwxwxxx
+wwwwxwwwxwxwwwxwwww
+wxxxxwxxxwxxxwxxxxw
+wxwwxwxwwwwwxwxwwxw
+wxxxxxxxxxxxxxxxxxw
+wxwwxwwwxwxwwwxwwxw
+woxxxxxxxwxxxxxxxow
 wwwwwwwwwwwwwwwwwww
 

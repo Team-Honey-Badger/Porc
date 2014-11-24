@@ -125,29 +125,32 @@ Agent::setupAnimations()
 	this->mTimer = 0;	// Start from the beginning
 	this->mVerticalVelocity = 0;	// Not jumping
 
-	// this is very important due to the nature of the exported animations
-	mBodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
+	if(agentType == 'c' || agentType == 'g'){
 
-	// Name of the animations for this character
-	Ogre::String animNames[] =
-		{"IdleBase", "IdleTop", "RunBase", "RunTop", "HandsClosed", "HandsRelaxed", "DrawSwords",
-		"SliceVertical", "SliceHorizontal", "Dance", "JumpStart", "JumpLoop", "JumpEnd"};
+		// this is very important due to the nature of the exported animations
+		mBodyEntity->getSkeleton()->setBlendMode(Ogre::ANIMBLEND_CUMULATIVE);
 
-	// populate our animation list
-	for (int i = 0; i < 13; i++)
-	{
-		mAnims[i] = mBodyEntity->getAnimationState(animNames[i]);
-		mAnims[i]->setLoop(true);
-		mFadingIn[i] = false;
-		mFadingOut[i] = false;
+		// Name of the animations for this character
+		Ogre::String animNames[] =
+			{"IdleBase", "IdleTop", "RunBase", "RunTop", "HandsClosed", "HandsRelaxed", "DrawSwords",
+			"SliceVertical", "SliceHorizontal", "Dance", "JumpStart", "JumpLoop", "JumpEnd"};
+
+		// populate our animation list
+		for (int i = 0; i < 13; i++)
+		{
+			mAnims[i] = mBodyEntity->getAnimationState(animNames[i]);
+			mAnims[i]->setLoop(true);
+			mFadingIn[i] = false;
+			mFadingOut[i] = false;
+		}
+
+		// start off in the idle state (top and bottom together)
+		setBaseAnimation(ANIM_IDLE_BASE);
+		setTopAnimation(ANIM_IDLE_TOP);
+
+		// relax the hands since we're not holding anything
+		mAnims[ANIM_HANDS_RELAXED]->setEnabled(true);
 	}
-
-	// start off in the idle state (top and bottom together)
-	setBaseAnimation(ANIM_IDLE_BASE);
-	setTopAnimation(ANIM_IDLE_TOP);
-
-	// relax the hands since we're not holding anything
-	mAnims[ANIM_HANDS_RELAXED]->setEnabled(true);
 }
 
 void 
@@ -162,14 +165,16 @@ Agent::setBaseAnimation(AnimID id, bool reset)
 
 	mBaseAnimID = id; 
 
-	if (id != ANIM_NONE)
-	{
-		// if we have a new animation, enable it and fade it in
-		mAnims[id]->setEnabled(true);
-		mAnims[id]->setWeight(0);
-		mFadingOut[id] = false;
-		mFadingIn[id] = true;
-		if (reset) mAnims[id]->setTimePosition(0);
+	if(agentType == 'c' || agentType == 'g'){
+		if (id != ANIM_NONE)
+		{
+			// if we have a new animation, enable it and fade it in
+			mAnims[id]->setEnabled(true);
+			mAnims[id]->setWeight(0);
+			mFadingOut[id] = false;
+			mFadingIn[id] = true;
+			if (reset) mAnims[id]->setTimePosition(0);
+		}
 	}
 }
 	
@@ -184,14 +189,17 @@ void Agent::setTopAnimation(AnimID id, bool reset)
 
 	mTopAnimID = id;
 
-	if (id != ANIM_NONE)
-	{
-		// if we have a new animation, enable it and fade it in
-		mAnims[id]->setEnabled(true);
-		mAnims[id]->setWeight(0);
-		mFadingOut[id] = false;
-		mFadingIn[id] = true;
-		if (reset) mAnims[id]->setTimePosition(0);
+	if(agentType == 'c' || agentType == 'g'){
+
+		if (id != ANIM_NONE)
+		{
+			// if we have a new animation, enable it and fade it in
+			mAnims[id]->setEnabled(true);
+			mAnims[id]->setWeight(0);
+			mFadingOut[id] = false;
+			mFadingIn[id] = true;
+			if (reset) mAnims[id]->setTimePosition(0);
+		}
 	}
 }
 
@@ -205,17 +213,20 @@ Agent::updateAnimations(Ogre::Real deltaTime)
 {
 	using namespace Ogre;
 
-	Real baseAnimSpeed = 1;
-	Real topAnimSpeed = 1;
+	if(agentType == 'c' || agentType == 'g'){
 
-	mTimer += deltaTime; // how much time has passed since the last update
+		Real baseAnimSpeed = 1;
+		Real topAnimSpeed = 1;
+
+		mTimer += deltaTime; // how much time has passed since the last update
 	
-	// increment the current base and top animation times
-	if (mBaseAnimID != ANIM_NONE) mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
-	if (mTopAnimID != ANIM_NONE) mAnims[mTopAnimID]->addTime(deltaTime * topAnimSpeed);
+		// increment the current base and top animation times
+		if (mBaseAnimID != ANIM_NONE) mAnims[mBaseAnimID]->addTime(deltaTime * baseAnimSpeed);
+		if (mTopAnimID != ANIM_NONE) mAnims[mTopAnimID]->addTime(deltaTime * topAnimSpeed);
 
-	// apply smooth transitioning between our animations
-	fadeAnimations(deltaTime);
+		// apply smooth transitioning between our animations
+		fadeAnimations(deltaTime);
+	}
 }
 
 void 
