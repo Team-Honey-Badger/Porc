@@ -340,7 +340,6 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 			mWalkList.clear();
 			toggle = !toggle;
 			telecount = 1;
-			//std::cout<<toggle<<std::endl;
 		}
 		else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
 			mBodyNode->setPosition(grid->getPosition(9,1));
@@ -348,7 +347,6 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 			mWalkList.clear();
 			toggle = !toggle;
 			telecount = 1;
-			//std::cout<<toggle<<std::endl;
 		}
 		else{
 			if(!toggle)
@@ -441,7 +439,6 @@ Agent::moveTo(){
 		selfNode->setID(3);	//note that you walked here
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
-			//cout<<selfNode->getRow()<<" , "<<selfNode->getColumn()<<endl;
 			//wait until a turn comes up before switching directions
 			switch(orientation)
 			{
