@@ -8,6 +8,7 @@
 GameApplication::GameApplication(void)
 {
 	agent = NULL; // Init member data
+	player = NULL;
 	//grid = NULL;
 	x = 0;
 	z = 0;
@@ -225,6 +226,13 @@ GameApplication::loadEnv()
 	objs.clear(); // calls their destructors if there are any. (not good enough)
 	
 	inputfile.close();
+
+	//give a pointer of the player agent to all ghosts
+	for(std::list<Agent*>::iterator i = agentList.begin(); i != agentList.end(); i++){
+		if((*i)->getAgentType() == 'g'){
+			(*i)->setPlayer(player);
+		}
+	}
 
 	//if a goal was initilized on the level file, then give it to all agents
 	//there is a default goal set just in case

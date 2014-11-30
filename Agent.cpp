@@ -1,7 +1,7 @@
 #include "Agent.h"
 #include "Grid.h"
 
-Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type)
+Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type/*, Agent* player*/)
 {
 	using namespace Ogre;
 
@@ -17,6 +17,9 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	this->agentType = type;
 	orientation = 0;
 	telecount = 0;
+
+	//identify player
+	//this->player = player;
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
@@ -59,6 +62,11 @@ void
 Agent::setSelfNode(int r, int c){
 	selfNode = grid->getNode(r,c);
 	selfNode->parent = NULL;
+}
+
+GridNode*
+Agent::getSelfNode(){
+	return selfNode;
 }
 
 void
@@ -105,6 +113,11 @@ int
 Agent::getOrientation()
 {
 	return this->orientation;
+}
+
+void 
+Agent::setPlayer(Agent *player){
+	this->player = player;
 }
 
 char
@@ -488,8 +501,8 @@ Agent::moveTo(){
 	//GHOSTS
 	if(agentType == 'g'){ //if ghost
 
+		//make a list of intersections if there isn't one already
 		if(intersections.size() == 0){
-			//make a list of intersections
 			GridNode *temp;
 			for(int i = 0; i < grid->getColNum(); i++){
 				for(int j = 0; j < grid->getRowNum(); j++){
@@ -510,34 +523,142 @@ Agent::moveTo(){
 			intersections.push_back(grid->getNode(9,18));
 		}
 
-
-
-
-
-
-
-		//set start and goal
+		//start and goal for A*
 		GridNode *current;
 		GridNode *goal;
 
-		if(mWalkList.empty()){ //is ghost walking to a goal?
+		////find out if ghost can see player
+		//bool LOS = false;
+		//if(selfNode->getRow() == player->getSelfNode()->getRow()){ //if ghost and player are in the same row
+		//	int dist = selfNode->getColumn() - player->getSelfNode()->getColumn(); //find column difference
+		//	if(abs(dist <= 5)){ //if player is in ghost's sight range
+		//		GridNode* temp = selfNode;
+		//		while(dist > 0){ //if ghost is on the player's right
+		//			if(dist > 0){
+		//				temp = grid->getWestNode(temp); //ghost looks 1 node left
+		//				if(!temp){ //if null, then ghost's LOS is blocked by a boundry
+		//					break;
+		//				}
+		//				if(!temp->isClear()){ //if not clear, then ghost's LOS is blocked by a wall
+		//					break;
+		//				}
+		//				else if(temp->getColumn() == player->getSelfNode()->getColumn()){ //if player is there, then ghost sees player
+		//					LOS = true;
+		//					cout<<"player's right"<<endl;
+		//					break;
+		//				}
+		//				dist--;
+		//			}
+		//			if(dist < 0){ //if ghost is on the player's left
+		//				temp = grid->getEastNode(temp); //ghost looks 1 node right
+		//				if(!temp){ //if null, then ghost's LOS is blocked by a boundry
+		//					break;
+		//				}
+		//				if(!temp->isClear()){ //if not clear, then ghost's LOS is blocked by a wall
+		//					break;
+		//				}
+		//				else if(temp->getColumn() == player->getSelfNode()->getColumn()){ //if player is there, then ghost sees player
+		//					LOS = true;
+		//					cout<<"player's left"<<endl;
+		//					break;
+		//				}
+		//				dist++;
+		//			}
+		//		}
+		//	}
+		//}
+
+		//find out if ghost can see player
+		bool LOS = true;
+		if(selfNode->getColumn() == player->getSelfNode()->getColumn()){ //if ghost and player are in the same column
+			int dist = selfNode->getRow() - player->getSelfNode()->getRow(); //find distance to player from ghost
+			if(abs(dist) < 7){ //if player is in range
+				if(dist < 0){ //if ghost is on the player's left
+					GridNode *temp = selfNode;
+					for(int i=0; i>=dist; i--){
+						temp = grid->getEastNode(temp); //look right
+						if(temp){
+							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
+								LOS=false;
+							}
+						}
+						else{ //declare player out of line of sight if a boundry is in the way
+							LOS=false;
+						}
+					}
+				}
+				else if(dist > 0){ //if ghost is on the player's right
+					GridNode *temp = selfNode;
+					for(int i=0; i<=dist; i++){
+						temp = grid->getEastNode(temp); //look right
+						if(temp){
+							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
+								LOS=false;
+							}
+						}
+						else{ //declare player out of line of sight if a boundry is in the way
+							LOS=false;
+						}
+					}
+				}
+			}
+		}
+		else if(selfNode->getRow() == player->getSelfNode()->getRow()){ //if ghost and player are in the same row
+			int dist = selfNode->getColumn() - player->getSelfNode()->getColumn();
+			if(abs(dist) < 7){
+				if(dist < 0){ //if ghost is on the player's south
+					GridNode *temp = selfNode;
+					for(int i=0; i>=dist; i--){
+						temp = grid->getNorthNode(temp); //look north
+						if(temp){
+							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
+								LOS=false;
+							}
+						}
+						else{ //declare player out of line of sight if a boundry is in the way
+							LOS=false;
+						}
+					}
+				}
+				else if(dist > 0){ //if ghost is on the player's north
+					GridNode *temp = selfNode;
+					for(int i=0; i<=dist; i++){
+						temp = grid->getSouthNode(temp); //look south
+						if(temp){
+							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
+								LOS=false;
+							}
+						}
+						else{ //declare player out of line of sight if a boundry is in the way
+							LOS=false;
+						}
+					}
+				}
+			}
+		}
+		else{ //declare player out of line of sight if not in a line with player
+			LOS=false;
+		}
+
+		//if ghost is not moving 
+		if(mWalkList.empty()){
 			current = selfNode;
-			setGoalNode();
+			//if player is in LOS
+			if(LOS){
+				goalNode = player->getSelfNode(); //target player
+			}
+			//else if not in LOS
+			else{
+				setGoalNode(); //pick a random goal
+			}
 			goal = goalNode;
 		}
+		//else if ghost is moving
 		else{
 			return; //return if still in route to goal
 		}
 
-
-		/*if(toggle){
-			goal = goalNode;
-		}
-		else{
-			goal = startNode;
-		}
-		toggle = !toggle;*/
-		
+		//begin A* /////////////////////////////////////////////////////////////////////////
 		list<GridNode*> open;
 		list<GridNode*> closed;
 

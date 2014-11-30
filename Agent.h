@@ -26,6 +26,7 @@ private:
 	GridNode *goalNode;	//where agent wants to go
 	GridNode *prev;		//where agent was last time
 	bool toggle; //toggle between S and G
+	Agent* player; //points to the player so ghosts can see him
 
 	// all of the animations our character has, and a null ID
 	// some of these affect separate body parts and will be blended together
@@ -83,7 +84,7 @@ private:
 	Ogre::AxisAlignedBox *targetHitBox;
 
 public:
-	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type);
+	Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type/*, Agent* player*/);
 	~Agent();
 
 	bool isFirstPosSet; //is the first position set, used for setting up initial position
@@ -104,9 +105,11 @@ public:
 
 	//setters for GridNodes
 	void setSelfNode(int r, int c);
+	GridNode* getSelfNode();
 	void setStartNode(int r, int c);
 	void setGoalNode();
 	void setID(int x);
+	void setPlayer(Agent* player);
 };
 
 #endif
