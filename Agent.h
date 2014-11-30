@@ -110,6 +110,9 @@ public:
 	void setGoalNode();
 	void setID(int x);
 	void setPlayer(Agent* player);
+
+	//player lives
+	int lives;
 };
 
 #endif

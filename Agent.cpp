@@ -18,8 +18,13 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	orientation = 0;
 	telecount = 0;
 
-	//identify player
-	//this->player = player;
+	//identify player and give him 3 lives
+	if(agentType == 'c'){
+		lives = 3;
+	}
+	else{
+		lives = -1;
+	}
 
 	mSceneMgr = SceneManager; // keep a pointer to where this agent will be
 
@@ -82,7 +87,7 @@ Agent::setGoalNode(){
 		//select a random interestion to walk to
 		std::random_shuffle(intersections.begin(), intersections.end());
 		goalNode = intersections.at(0);
-	}while( grid->getDistance(goalNode, selfNode) > 5 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//make sure it's close (more random movement) and not your pevious spot
+	}while( grid->getDistance(goalNode, selfNode) > 4 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//make sure it's close (more random movement) and not your pevious spot
 	prev = selfNode;	//save current location as previous spot
 	goalNode->parent = NULL;
 }
@@ -527,47 +532,6 @@ Agent::moveTo(){
 		GridNode *current;
 		GridNode *goal;
 
-		////find out if ghost can see player
-		//bool LOS = false;
-		//if(selfNode->getRow() == player->getSelfNode()->getRow()){ //if ghost and player are in the same row
-		//	int dist = selfNode->getColumn() - player->getSelfNode()->getColumn(); //find column difference
-		//	if(abs(dist <= 5)){ //if player is in ghost's sight range
-		//		GridNode* temp = selfNode;
-		//		while(dist > 0){ //if ghost is on the player's right
-		//			if(dist > 0){
-		//				temp = grid->getWestNode(temp); //ghost looks 1 node left
-		//				if(!temp){ //if null, then ghost's LOS is blocked by a boundry
-		//					break;
-		//				}
-		//				if(!temp->isClear()){ //if not clear, then ghost's LOS is blocked by a wall
-		//					break;
-		//				}
-		//				else if(temp->getColumn() == player->getSelfNode()->getColumn()){ //if player is there, then ghost sees player
-		//					LOS = true;
-		//					cout<<"player's right"<<endl;
-		//					break;
-		//				}
-		//				dist--;
-		//			}
-		//			if(dist < 0){ //if ghost is on the player's left
-		//				temp = grid->getEastNode(temp); //ghost looks 1 node right
-		//				if(!temp){ //if null, then ghost's LOS is blocked by a boundry
-		//					break;
-		//				}
-		//				if(!temp->isClear()){ //if not clear, then ghost's LOS is blocked by a wall
-		//					break;
-		//				}
-		//				else if(temp->getColumn() == player->getSelfNode()->getColumn()){ //if player is there, then ghost sees player
-		//					LOS = true;
-		//					cout<<"player's left"<<endl;
-		//					break;
-		//				}
-		//				dist++;
-		//			}
-		//		}
-		//	}
-		//}
-
 		//find out if ghost can see player
 		bool LOS = true;
 		if(selfNode->getColumn() == player->getSelfNode()->getColumn()){ //if ghost and player are in the same column
@@ -608,7 +572,7 @@ Agent::moveTo(){
 			if(abs(dist) < 7){
 				if(dist < 0){ //if ghost is on the player's south
 					GridNode *temp = selfNode;
-					for(int i=0; i>=dist; i--){
+					for(int i=0; i>dist; i--){
 						temp = grid->getNorthNode(temp); //look north
 						if(temp){
 							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
@@ -622,7 +586,7 @@ Agent::moveTo(){
 				}
 				else if(dist > 0){ //if ghost is on the player's north
 					GridNode *temp = selfNode;
-					for(int i=0; i<=dist; i++){
+					for(int i=0; i<dist; i++){
 						temp = grid->getSouthNode(temp); //look south
 						if(temp){
 							if(!temp->isClear()){ //declare player out of line of sight if a wall is in the way
@@ -676,15 +640,16 @@ Agent::moveTo(){
 		while(true){
 
 			//add new and clear adjacent nodes to open list
+			//adjusted A* for no diagnols since this is like pacman
 			temp.clear(); //clear previous neighbors
-			temp.push_front(grid->getEastNode(current));
-			//temp.push_front(grid->getNENode(current));
-			temp.push_front(grid->getNorthNode(current));
-			//temp.push_front(grid->getNWNode(current));
-			temp.push_front(grid->getWestNode(current));
-			//temp.push_front(grid->getSWNode(current));
-			temp.push_front(grid->getSouthNode(current));
-			//temp.push_front(grid->getSENode(current));
+			if(grid->getEastNode(current))
+				temp.push_front(grid->getEastNode(current));
+			if(grid->getNorthNode(current))
+				temp.push_front(grid->getNorthNode(current));
+			if(grid->getWestNode(current))
+				temp.push_front(grid->getWestNode(current));
+			if(grid->getSouthNode(current))
+				temp.push_front(grid->getSouthNode(current));
 			for(list<GridNode*>::iterator j = temp.begin(); j != temp.end(); j++){
 				if((*j) != NULL){
 					inClosed = false;
@@ -716,9 +681,7 @@ Agent::moveTo(){
 				H = 10 * grid->getDistance((*i), goal);
 				//find movement cost
 				G = 10 * grid->getDistance(current, (*i));
-				//if( G = 20 ){
-				//	G = 14; //compensate for diagonals
-				//}
+				
 				//add up total
 				F = G + H;
 
@@ -763,15 +726,6 @@ Agent::moveTo(){
 
 			//break if it reached the goal
 			if( current->getRow() == goal->getRow() && current->getColumn() == goal->getColumn() ){
-			
-				int counter = 0;
-			
-				//set up counter to count backwards
-				GridNode *countDown = current;
-				while(countDown != selfNode){
-					counter++;
-					countDown = countDown->parent;
-				}
 
 				//backtrack the path to the goal into the walklist
 				while( current != selfNode ){
