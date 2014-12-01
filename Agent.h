@@ -113,6 +113,9 @@ public:
 
 	//player lives
 	int lives;
+
+	//reset after losing a life
+	bool reset;
 };
 
 #endif

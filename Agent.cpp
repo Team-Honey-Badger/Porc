@@ -1,7 +1,7 @@
 #include "Agent.h"
 #include "Grid.h"
 
-Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type/*, Agent* player*/)
+Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type)
 {
 	using namespace Ogre;
 

@@ -40,6 +40,7 @@ public:
 
 	Ogre::AxisAlignedBox targetHitBox; //barrel's hit box
 
+
 protected:
     virtual void createScene(void);
 };
