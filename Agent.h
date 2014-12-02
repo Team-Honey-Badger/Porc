@@ -59,7 +59,6 @@ private:
 
 	void setupAnimations();					// load this character's animations
 	void fadeAnimations(Ogre::Real deltaTime);				// blend from one animation to another
-	void updateBody(Ogre::Real deltaTime);
 	void updateAnimations(Ogre::Real deltaTime);			// update the animation frame
 
 	// for locomotion
@@ -74,6 +73,8 @@ private:
 	std::vector<GridNode*> intersections;	// list of intersections
 
 	void collide(Ogre::Real deltaTime);		//tests collision detection between player and ghosts
+
+	void setAABB(); //sets the AABB's of the player and ghost
 
 	//////////////////////////////////////////////
 	// Lecture 4

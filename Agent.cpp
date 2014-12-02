@@ -1,6 +1,8 @@
 #include "Agent.h"
 #include "Grid.h"
 
+int Agent::gID = 0; //declaring the identitfier that numerates the ghosts
+
 Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type)
 {
 	using namespace Ogre;
@@ -55,7 +57,6 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 
 	//default to non-motion
 	defaultOrientation = 0;
-	
 }
 
 Agent::~Agent(){
@@ -138,6 +139,7 @@ Agent::update(Ogre::Real deltaTime)
 	this->updateAnimations(deltaTime);	// Update animation playback
 	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go	
+	collide(deltaTime);
 
 	////collecting barrels
 	//Ogre::AxisAlignedBox barrelHitbox = this->mBodyEntity->getWorldBoundingBox(true); //get hitbox
@@ -264,11 +266,6 @@ void Agent::setTopAnimation(AnimID id, bool reset)
 			if (reset) mAnims[id]->setTimePosition(0);
 		}
 	}
-}
-
-void
-Agent::updateBody(Ogre::Real deltaTime)
-{
 }
 
 void 
@@ -746,11 +743,14 @@ Agent::moveTo(){
 	}
 }
 
-int Agent::gID = 0;
 void
 Agent::collide(Ogre::Real deltaTime)
 {
-	Ogre::AxisAlignedBox PlayerBox = this->mBodyEntity->getWorldBoundingBox(true); //the AABB of the player
 
-	
+}
+
+void
+Agent::setAABB()
+{
+
 }
