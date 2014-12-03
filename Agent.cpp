@@ -434,8 +434,9 @@ Agent::moveTo(){
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//wait until a turn comes up before switching directions
-			if (grid->isDone() == true)
-				while (1) { std::cout << "YOU WON!!!!!!!!! "; } 
+			if (grid->isDone()){
+				doneWithLevel = true;
+			}
 
 			switch(orientation)
 			{
@@ -775,10 +776,9 @@ Agent::collide(Ogre::Real deltaTime)
 {
 	if (agentType == 'g')
 	{
-		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true)))
-			std::cout << "ouch" << std::endl; //should take away a life, NYI
-			lives--;
-
+		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){
+			player->loseLife();
+		}
 	}
 }
 

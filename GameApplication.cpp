@@ -13,7 +13,8 @@ GameApplication::GameApplication(void)
 	x = 0;
 	z = 0;
 
-	this->toggle = true; //toggles between start and goal
+	//start at level 1
+	level = 1;
 }
 //-------------------------------------------------------------------------------------
 GameApplication::~GameApplication(void)
@@ -281,6 +282,16 @@ GameApplication::addTime(Ogre::Real deltaTime)
 bool 
 GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplication
 {
+	//level changing is integrated with pressing keys
+	if(player->reset)			//if the game needs to be reset
+	{
+		level = 1;				//go back to level 1
+	}
+	if(player->doneWithLevel)	//if player won the map
+	{
+		level++;				//go to the next level
+	}
+
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
 
     if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
@@ -368,23 +379,29 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     {
         mShutDown = true;
     }
-	else if (arg.key == OIS::KC_1)
+	else if (arg.key == OIS::KC_1 || (player->reset))										//level 1
 	{
-		mSceneMgr->destroyAllEntities();
-		agentList.clear();
-		loadEnv("map1.txt");
+		mSceneMgr->destroyAllEntities();	//erase all things in the level
+		agentList.clear();					//erase all the agents in the level
+		loadEnv("map1.txt");				//load a level
+		player->reset = false;				//the level no longer needs to be reset
+		player->doneWithLevel = false;		//the player is no longer done with the level
 	}
-	else if (arg.key == OIS::KC_2)
+	else if (arg.key == OIS::KC_2 || (player->doneWithLevel && level == 2))					//level 2
 	{
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map2.txt");
+		player->reset = false;
+		player->doneWithLevel = false;
 	}
-	else if (arg.key == OIS::KC_3)
+	else if (arg.key == OIS::KC_3 || (player->doneWithLevel && level == 3))					//level 3
 	{
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map3.txt");
+		player->reset = false;
+		player->doneWithLevel = false;
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
@@ -406,7 +423,7 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 		if(player)
 			player->setOrientation(4);
 	}
-   
+
     return true;
 }
 

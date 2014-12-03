@@ -78,7 +78,7 @@ public:
 	int getRowNum();
 	int getColNum();
 
-	bool isDone();
+	bool isDone();	//find out if any barrels remain to be collected
 };
 
 #endif

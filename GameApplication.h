@@ -13,7 +13,8 @@ private:
 	//grid size variables
 	int x;
 	int z;
-	bool toggle;
+
+	int level;
 
 public:
     GameApplication(void);

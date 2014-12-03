@@ -122,15 +122,15 @@ Grid::Grid(Ogre::SceneManager* mSceneMgr, int numRows, int numCols)
 	data.resize(numCols, GridRow(numRows));
 		
 	// put the coordinates in each node
-	int count = 0;
+	//int count = 0;	//this wasn't needed
 	for (int i = 0; i < numRows; i++)
 		for (int j = 0; j < numCols; j++)
 		{
 			GridNode *n = this->getNode(i,j);
 			n->setRow(i);
 			n->setColumn(j);
-			n->setID(count);
-			count++;
+			//n->setID(count);
+			//count++;
 		}
 }
 
@@ -380,8 +380,9 @@ Grid::isDone()
 {
 	for(int y = 0; y < nCols; y++){
 		for(int x = 0; x < nRows; x++){
-			if (this->data[y].data[x].getID() == 2)
+			if (this->data[y].data[x].getID() == 2){
 				return false;
+			}
 		}
 	}
 	return true;
