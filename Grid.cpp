@@ -244,6 +244,8 @@ Grid::getNENode(GridNode* n)
 	if(getEastNode(getNorthNode(n))){
 		return getNorthNode(getEastNode(n)); 
 	}
+
+	return NULL;
 }
 
 GridNode* 
@@ -253,6 +255,8 @@ Grid::getNWNode(GridNode* n)
 	if(getWestNode(getNorthNode(n))){
 		return getNorthNode(getWestNode(n));
 	}
+
+	return NULL;
 }
 
 GridNode* 
@@ -262,6 +266,8 @@ Grid::getSENode(GridNode* n)
 	if(getEastNode(getSouthNode(n))){
 		return getSouthNode(getEastNode(n));
 	}
+
+	return NULL;
 }
 
 GridNode* 
@@ -271,6 +277,8 @@ Grid::getSWNode(GridNode* n)
 	if(getWestNode(getSouthNode(n))){
 		return getSouthNode(getWestNode(n));
 	}
+
+	return NULL;
 }
 ////////////////////////////////////////////////////////////////
 //get distance between between two nodes

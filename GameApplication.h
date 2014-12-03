@@ -7,8 +7,8 @@
 class GameApplication : public BaseApplication
 {
 private:
-	Agent* player; //player
-	Agent* agent; // a agent
+	Agent* player; // player
+	Agent* agent; // an agent
 	std::list<Agent*> agentList; //the agentList (holds the ghosts and the player)
 	//grid size variables
 	int x;
@@ -39,9 +39,6 @@ public:
     bool mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
     bool mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id );
 	////////////////////////////////////////////////////////////////////////////
-
-	Ogre::AxisAlignedBox targetHitBox; //barrel's hit box
-
 
 protected:
     virtual void createScene(void);
