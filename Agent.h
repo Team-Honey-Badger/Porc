@@ -22,6 +22,8 @@ private:
 	//player lives
 	int lives;
 
+	int score;
+
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
 	GridNode *startNode;
@@ -107,6 +109,9 @@ public:
 
 	void moveTo(); //move to a new position
 
+	int getScore(); //returns the score of the game (needed for scoreboard)
+	int getLives(); //returns the number of the lives the player has (needed for scoreboard)
+
 	//setters for GridNodes
 	void setSelfNode(int r, int c);
 	GridNode* getSelfNode();
@@ -121,6 +126,8 @@ public:
 
 	//progress to next level or win
 	bool doneWithLevel;
+
+
 };
 
 #endif

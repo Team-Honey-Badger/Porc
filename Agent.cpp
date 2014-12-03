@@ -18,9 +18,8 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	orientation = 0;
 	reset = false;
 	doneWithLevel = false;
-	//lostALife = false;
 	pauseTimer = 0;
-
+	score = 0;
 
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
@@ -127,6 +126,18 @@ char
 Agent::getAgentType()
 {
 	return this->agentType;
+}
+
+int
+Agent::getScore()
+{
+	return this->score;
+}
+
+int
+Agent::getLives()
+{
+	return this->lives;
 }
 
 // update is called at every frame from GameApplication::addTime
@@ -424,6 +435,9 @@ Agent::moveTo(){
 
 	//PLAYER
 	if(agentType == 'c'){
+
+		if (selfNode->getID() == 2)
+			score = score + 100; //increment the score whenever you eat a pellet
 
 		selfNode->setID(3);	//note that you walked here
 

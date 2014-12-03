@@ -34,6 +34,23 @@ void GameApplication::createScene(void)
 	loadObjects();
 	loadCharacters();
 }
+
+void GameApplication::createGUI()
+{
+	if (mTrayMgr == NULL) return;
+	using namespace OgreBites;
+
+	Ogre::StringVector life;
+	life.push_back("Lives Remaining");
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",200,life);
+
+	Ogre::StringVector score;
+	score.push_back("Score");
+	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",200,score);
+
+	mTrayMgr->showAll();
+}
+
 //////////////////////////////////////////////////////////////////
 // Lecture 5: Returns a unique name for loaded objects and agents
 std::string getNewName() // return a unique name 
@@ -278,9 +295,13 @@ GameApplication::addTime(Ogre::Real deltaTime)
 	for (std::list<Agent*>::iterator iter = agentList.begin(); iter != agentList.end(); iter++)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
-	
+
 	//look for win/lose conditions that result in changing levels
 	levelManager();
+
+	lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
+
+	scoreBoard->setParamValue(0, Ogre::StringConverter::toString(agent->getScore()));
 }
 
 bool 

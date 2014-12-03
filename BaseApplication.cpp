@@ -259,6 +259,8 @@ bool BaseApplication::setup(void)
 
     createFrameListener();
 
+	createGUI();
+
     return true;
 };
 //-------------------------------------------------------------------------------------

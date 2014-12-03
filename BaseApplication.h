@@ -49,6 +49,7 @@ protected:
     virtual void createCamera(void);
     virtual void createFrameListener(void);
     virtual void createScene(void) = 0; // Override me!
+	virtual void createGUI(void) = 0; // Lecture 16
 	virtual void addTime(Ogre::Real deltaTime) = 0;
     virtual void destroyScene(void);
     virtual void createViewports(void);
