@@ -73,7 +73,7 @@ public:
 	void loadObject(std::string name, std::string filename, int row, int height, int col, float scale = 1); // load and place a model in a certain location.
 	Ogre::Vector3 getPosition(int r, int c);	// return the position  
 
-	void eraseContains(); //erases the last path from grid.txt
+	void eraseParents(); //erases the parent of every node
 
 	int getRowNum();
 	int getColNum();

@@ -55,7 +55,6 @@ private:
 	bool mFadingOut[13];					// which animations are fading out
 	Ogre::Real mTimer;						// general timer to see how long animations have been playing
 	Ogre::Real mVerticalVelocity;			// for jumping
-	int telecount;
 
 	void setupAnimations();					// load this character's animations
 	void fadeAnimations(Ogre::Real deltaTime);				// blend from one animation to another

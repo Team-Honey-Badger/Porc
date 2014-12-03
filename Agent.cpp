@@ -18,7 +18,6 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	toggle = false;
 	this->agentType = type;
 	orientation = 0;
-	telecount = 0;
 	reset = false;
 
 	//identify player and give him 3 lives
@@ -89,7 +88,7 @@ Agent::setGoalNode(){
 		//select a random interestion to walk to
 		std::random_shuffle(intersections.begin(), intersections.end());
 		goalNode = intersections.at(0);
-	}while( grid->getDistance(goalNode, selfNode) > 4 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//make sure it's close (more random movement) and not your pevious spot
+	}while( grid->getDistance(goalNode, selfNode) > 4 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//A* to an intersection within 4 nodes(more random movement that way) and not your pevious spot
 	prev = selfNode;	//save current location as previous spot
 	goalNode->parent = NULL;
 }
@@ -137,18 +136,6 @@ Agent::getAgentType()
 void
 Agent::update(Ogre::Real deltaTime) 
 {
-	if(reset){
-		reset = false;
-		int x = 1, y = 1;
-		mBodyNode->setPosition(grid->getPosition(x,y)); // make the Ogre stand on the plane (almost)
-		mDestination = grid->getPosition(x,y);
-		mWalkList.clear();
-		mDistance = 0;
-		mWalkList.push_front(grid->getPosition(x,y));
-		selfNode = grid->getNode(x,y);
-		goalNode = grid->getNode(x,y);
-	}
-
 	this->updateAnimations(deltaTime);	// Update animation playback
 	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go	
@@ -341,43 +328,38 @@ void
 Agent::updateLocomote(Ogre::Real deltaTime)
 {
 	//teleportation
-	//move agent across the map at a speed to high to see when reaching the end of the map
-	Ogre::Real teleportation = 999; //move speed while teleporting
-	if(agentType == 'c'){ //works only for the player
-		if(selfNode->getColumn() == 0 && selfNode->getRow() == 9){
-			mBodyNode->setPosition(grid->getPosition(9,17));
-			selfNode = grid->getNode(9, 17);
-			mWalkList.clear();
-			toggle = !toggle;
-			telecount = 1;
+	if(agentType == 'c' || agentType == 'g'){								//player and ghosts can teleport
+		if(!nextLocation())													//wait till they come to a full stop before teleporting	
+		{
+			if(selfNode->getColumn() == 0 && selfNode->getRow() == 9)		//teleporter enterance
+			{
+				int x = 9, y = 18;											//teleporter exit
+				mBodyNode->setPosition(grid->getPosition(x,y));				//move everything over
+				mDestination = grid->getPosition(x,y);
+				mWalkList.clear();											//clear any pathfinding
+				mDistance = 0;
+				mWalkList.push_front(grid->getPosition(x,y));
+				selfNode = grid->getNode(x,y);								//tell agent where it is
+				goalNode = grid->getNode(x,y);
+			}
+			else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9)	
+			{
+				int x = 9, y = 0;
+				mBodyNode->setPosition(grid->getPosition(x,y));
+				mDestination = grid->getPosition(x,y);
+				mWalkList.clear();
+				mDistance = 0;
+				mWalkList.push_front(grid->getPosition(x,y));
+				selfNode = grid->getNode(x,y);
+				goalNode = grid->getNode(x,y);
+			}
 		}
-		else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9){
-			mBodyNode->setPosition(grid->getPosition(9,1));
-			selfNode = grid->getNode(9, 1);
-			mWalkList.clear();
-			toggle = !toggle;
-			telecount = 1;
-		}
-		else{
-			if(!toggle)
-				teleportation = 1;
-		}
-	}
-	else{
-		teleportation = 1;
 	}
 
 	if (mDirection == Ogre::Vector3::ZERO) 
     {
         if (nextLocation()) 
         {
-			//turn off teleportation if at next location
-			if(telecount == 0){
-				toggle = false;
-			}
-			else{
-				telecount = 0;
-			}
             //set to running animation
 			if(mBaseAnimID != ANIM_RUN_BASE){ // stay in running if already in running (avoids T-pose issue)
 				setBaseAnimation(ANIM_RUN_BASE);
@@ -417,12 +399,9 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 	else
 	{
 		//move model
-		Ogre::Real move = mWalkSpeed * deltaTime * teleportation;
+		Ogre::Real move = mWalkSpeed * deltaTime;
 		mBodyNode->translate(mDirection * move);
 		mDistance -= move;
-		/*if(telecount > 0){
-			telecount -= deltaTime;
-		}*/
 	}
 
 	if (mDistance <= 0.0f)
@@ -743,6 +722,8 @@ Agent::moveTo(){
 					current = current->parent;
 
 				}
+				//erase parents so that other A*s running don't get tangled
+				grid->eraseParents();
 
 				//set agents initial position to the goal position it just reached
 				setSelfNode(goal->getRow(), goal->getColumn());

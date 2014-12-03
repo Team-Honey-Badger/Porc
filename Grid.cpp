@@ -348,13 +348,10 @@ Grid::getPosition(int r, int c)
 }
 
 void
-Grid::eraseContains(){
+Grid::eraseParents(){
 	for(int y = 0; y < nCols; y++){
 		for(int x = 0; x < nRows; x++){
 			this->data[y].data[x].parent = NULL;
-			if(this->data[y].data[x].contains != 'B'){
-				this->data[y].data[x].contains = '.';
-			}
 		}
 	}
 }
