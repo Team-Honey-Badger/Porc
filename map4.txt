@@ -1,5 +1,5 @@
 19 19
-Examples/WaterStream
+Examples/CloudySky
 
 Objects
 f fish.mesh 1.0 0.0 1
@@ -11,23 +11,23 @@ x Barrel.mesh 10.0 0.4 x
 
 World
 
-xoxoxxxoxoxoooooooo
-oxooxoxoxoxoooooooo
-oxooxoxoxoxoooooooo
-oxooxxxoxxxoooooooo
-xoxoxoxxxoxxooxoooo
-xoxoxooxooxxxoxoooo
-xoxoxooxooxoxxxoooo
-oxoxooxxxoxooxxoooo
 ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-oooooooocoooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
-ooooooooooooooooooo
+ooowwwwwooooooxoooo
+oowoooooooooxoooooo
+oowooowwwooooooxooo
+ooowoooowooxooooooo
+oooowwwwoooooooooxo
+oooooooxooowwwwwooo
+ooxooooooowoooooooo
+oooooxoooowooowwwoo
+ooooooooxoowoooowoo
+oooxoooooooowwwwooo
+oooooooooooooooxooo
+oooxooooxoooooooooo
+ooxoooooooooooxoooo
+wooooowowwwowwooowo
+wooooowoowoowowoowo
+owowowxoowoxwoowowo
+oowowooowwwowooowwo
+oooxooooxooooooxooo
 
