@@ -17,7 +17,7 @@ private:
 	//level management
 	int level;				//current level
 	void levelManager();	//selects levels
-
+	void deleteAgentList();	//deletes all agents to free the memory
 
 public:
     GameApplication(void);

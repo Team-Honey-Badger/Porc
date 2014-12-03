@@ -18,6 +18,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	reset = false;
 	doneWithLevel = false;
 	pauseTimer = 0.0;
+
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
 		lives = 3;
@@ -81,12 +82,8 @@ Agent::setStartNode(int r, int c){
 
 void
 Agent::setGoalNode(){
-	do{
-		//select a random interestion to walk to
-		std::random_shuffle(intersections.begin(), intersections.end());
-		goalNode = intersections.at(0);
-	}while( grid->getDistance(goalNode, selfNode) > 4 ); // A* to an intersection within 4 nodes(more random movement that way)
-	//goalNode->parent = NULL;
+	std::random_shuffle(intersections.begin(), intersections.end());	//shuffle list of destinations
+	goalNode = intersections.at(0);										//select first (still random)
 }
 
 void 
@@ -316,7 +313,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				mDestination = grid->getPosition(x,y);				//set destination to exit
 				mWalkList.clear();									//clear any pathfinding
 				mDistance = 0;										//clear distance since already here
-				mWalkList.push_front(grid->getPosition(x,y));		//walk here (just in case)
+				//mWalkList.push_front(grid->getPosition(x,y));		//walk here (just in case)
 				selfNode = grid->getNode(x,y);						//tell agent where it is
 				goalNode = grid->getNode(x,y);						//make agent want to be here
 			}
@@ -327,7 +324,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				mDestination = grid->getPosition(x,y);
 				mWalkList.clear();
 				mDistance = 0;
-				mWalkList.push_front(grid->getPosition(x,y));
+				//mWalkList.push_front(grid->getPosition(x,y));
 				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
@@ -338,7 +335,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				mDestination = grid->getPosition(x,y);
 				mWalkList.clear();
 				mDistance = 0;
-				mWalkList.push_front(grid->getPosition(x,y));
+				//mWalkList.push_front(grid->getPosition(x,y));
 				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
@@ -349,7 +346,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				mDestination = grid->getPosition(x,y);
 				mWalkList.clear();
 				mDistance = 0;
-				mWalkList.push_front(grid->getPosition(x,y));
+				//mWalkList.push_front(grid->getPosition(x,y));
 				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
@@ -504,8 +501,8 @@ Agent::moveTo(){
 		//make a list of intersections if there isn't one already
 		if(intersections.size() == 0){
 			GridNode *temp;
-			for(int i = 0; i < grid->getColNum(); i++){
-				for(int j = 0; j < grid->getRowNum(); j++){
+			for(int i = 0; i <= grid->getColNum(); i++){
+				for(int j = 0; j <= grid->getRowNum(); j++){
 					temp = grid->getNode(i,j);
 					if(temp){ //if not null
 						if(temp->isClear()){
@@ -660,14 +657,31 @@ Agent::moveTo(){
 			//add new and clear adjacent nodes to open list
 			//adjusted A* for no diagnols since this is like pacman
 			temp.clear(); //clear previous neighbors
-			if(grid->getEastNode(current))
-				temp.push_front(grid->getEastNode(current));
-			if(grid->getNorthNode(current))
-				temp.push_front(grid->getNorthNode(current));
-			if(grid->getWestNode(current))
-				temp.push_front(grid->getWestNode(current));
-			if(grid->getSouthNode(current))
-				temp.push_front(grid->getSouthNode(current));
+			GridNode *node = NULL;
+			node = grid->getEastNode(current);
+			if(node){
+				if(node->isClear()){
+					temp.push_front(node);
+				}
+			}
+			node = grid->getNorthNode(current);
+			if(node){
+				if(node->isClear()){
+					temp.push_front(node);
+				}
+			}
+			node = grid->getWestNode(current);
+			if(node){
+				if(node->isClear()){
+					temp.push_front(node);
+				}
+			}
+			node = grid->getSouthNode(current);
+			if(node){
+				if(node->isClear()){
+					temp.push_front(node);
+				}
+			}
 			for(list<GridNode*>::iterator j = temp.begin(); j != temp.end(); j++){
 				if((*j) != NULL){
 					inClosed = false;
@@ -805,7 +819,7 @@ Agent::resetPositions(Ogre::Real deltaTime){
 		mDestination = grid->getPosition(x,y);						//set destination to exit
 		mWalkList.clear();											//clear any pathfinding
 		mDistance = 0;												//clear distance since already here
-		mWalkList.push_front(grid->getPosition(x,y));				//walk here (just in case)
+		//mWalkList.push_front(grid->getPosition(x,y));				//walk here (just in case)
 		selfNode = grid->getNode(x,y);								//tell agent where it is
 		goalNode = grid->getNode(x,y);								//make agent want to be here
 		setBaseAnimation(ANIM_IDLE_BASE);							//hold animation in place

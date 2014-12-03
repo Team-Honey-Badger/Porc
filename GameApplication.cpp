@@ -413,36 +413,32 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 		level = 1;							//identify level
 		mSceneMgr->destroyAllEntities();	//erase all things in the level
 		agentList.clear();					//erase all the agents in the level
+		deleteAgentList();					//free memory
 		loadEnv("map1.txt");				//load a level
-		player->reset = false;				//the level no longer needs to be reset
-		player->doneWithLevel = false;		//the player is no longer done with the level
 	}
 	else if (arg.key == OIS::KC_2)				//level 2
 	{
 		level = 2;							
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
+		deleteAgentList();					//free memory
 		loadEnv("map2.txt");
-		player->reset = false;
-		player->doneWithLevel = false;
 	}
 	else if (arg.key == OIS::KC_3)				//level 3
 	{
 		level = 3;							
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
+		deleteAgentList();					//free memory
 		loadEnv("map3.txt");
-		player->reset = false;
-		player->doneWithLevel = false;
 	}
 	else if (arg.key == OIS::KC_4)				//level 4
 	{
 		level = 4;							
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
+		deleteAgentList();					//free memory
 		loadEnv("map4.txt");
-		player->reset = false;
-		player->doneWithLevel = false;
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
@@ -504,7 +500,7 @@ void GameApplication::levelManager(){
 		}
 		mSceneMgr->destroyAllEntities();		//erase all the things in the level
 		agentList.clear();						//erase all the agents
-
+		deleteAgentList();						//free memory
 		std::stringstream levelName;			//build the map name into here
 		levelName << "map" << level << ".txt";	//write the file name with the level number
 		std::string map;						//write the map name into here 
@@ -513,5 +509,12 @@ void GameApplication::levelManager(){
 		loadEnv(map);							//load map							
 		player->reset = false;					//the level no longer needs to be reset
 		player->doneWithLevel = false;			//the player is no longer done with the level
+	}
+}
+
+void GameApplication::deleteAgentList(){
+	for(std::list<Agent*>::iterator i = agentList.begin(); i != agentList.end(); i++){
+		delete (*i);
+		(*i) = NULL;
 	}
 }

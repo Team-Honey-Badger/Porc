@@ -123,7 +123,6 @@ public:
 	//progress to next level or win
 	bool doneWithLevel;
 
-
 };
 
 #endif
