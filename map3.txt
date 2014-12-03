@@ -5,8 +5,8 @@ Objects
 f fish.mesh 1.0 0.0 1
 
 Characters
-c sinbad.mesh 10.0 2 c
-g sinbad.mesh 10.0 2 g
+c sinbad.mesh 10.0 1.5 c
+g sinbad.mesh 10.0 1.5 g
 x Barrel.mesh 10.0 0.4 x
 
 World
