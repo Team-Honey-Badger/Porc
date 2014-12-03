@@ -396,11 +396,7 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
-<<<<<<< HEAD
 		loadNewLevel("map2.txt");
-=======
-		
->>>>>>> origin/master
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
