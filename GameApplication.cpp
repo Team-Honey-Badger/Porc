@@ -295,7 +295,20 @@ GameApplication::addTime(Ogre::Real deltaTime)
 	//look for win/lose conditions that result in changing levels
 	levelManager();
 
-	lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
+	switch(player->getLives()){
+	case 3:
+		lifeBoard->setParamValue(0, "<3 <3 <3");
+		break;
+	case 2:
+		lifeBoard->setParamValue(0, "<3 <3");
+		break;
+	case 1:
+		lifeBoard->setParamValue(0, "<3");
+		break;
+	default:
+		lifeBoard->setParamValue(0, ":(");
+	}
+	//lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
 }
 
 bool 
