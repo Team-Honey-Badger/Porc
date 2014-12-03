@@ -139,21 +139,7 @@ Agent::update(Ogre::Real deltaTime)
 	this->updateAnimations(deltaTime);	// Update animation playback
 	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go	
-	collide(deltaTime);
-
-	////collecting barrels
-	//Ogre::AxisAlignedBox barrelHitbox = this->mBodyEntity->getWorldBoundingBox(true); //get hitbox
-
-	//std::list<Agent*>::iterator i;
-	////for(i = 
-
-	////check for collision with target and ground
-	//if (barrelHitbox.intersects(*targetHitBox))
-	//{
-	//	//remove barrel from map
-	//	setPosition(0,-500,0);
-	//}
-
+	collide(deltaTime);					// Check if Ghosts collide with player
 }
 
 
