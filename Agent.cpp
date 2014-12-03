@@ -432,7 +432,7 @@ Agent::moveTo(){
 
 		selfNode->setID(3);	//note that you walked here
 
-		if (grid->isDone() == true)
+		if (grid->isDone())
 			std::cout << "you win!" << std::endl;
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
