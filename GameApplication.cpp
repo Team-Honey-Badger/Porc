@@ -38,12 +38,12 @@ void GameApplication::createGUI()
 	using namespace OgreBites;
 
 	Ogre::StringVector life;
-	life.push_back("Lives Remaining:");
-	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",250,life);
+	life.push_back("Lives Remaining");
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",200,life);
 
 	Ogre::StringVector score;
-	score.push_back("Score:");
-	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",250,score);
+	score.push_back("Score");
+	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",200,score);
 
 	mTrayMgr->showAll();
 }
@@ -295,9 +295,9 @@ GameApplication::addTime(Ogre::Real deltaTime)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
 
-	scoreBoard->setParamValue(0, Ogre::StringConverter::toString(agent->getScore()));
+	lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
 
-	lifeBoard->setParamValue(0,Ogre::StringConverter::toString(agent->getLives()));
+	scoreBoard->setParamValue(0, Ogre::StringConverter::toString(agent->getScore()));
 }
 
 bool 

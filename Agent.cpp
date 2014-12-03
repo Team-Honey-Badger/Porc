@@ -18,7 +18,8 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	orientation = 0;
 	reset = false;
 	doneWithLevel = false;
-
+	score = 0;
+	
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
 		lives = 3;
