@@ -19,7 +19,7 @@ public:
     GameApplication(void);
     virtual ~GameApplication(void);
 
-	void loadEnv();			// Load the buildings or ground plane, etc.
+	void loadEnv(std::string fileName);			// Load the buildings or ground plane, etc.
 	void setupEnv();		// Set up the lights, shadows, etc
 	void loadObjects();		// Load other props or objects (e.g. furniture)
 	void loadCharacters();	// Load actors, agents, characters

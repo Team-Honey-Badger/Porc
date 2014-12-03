@@ -25,7 +25,7 @@ GameApplication::~GameApplication(void)
 //-------------------------------------------------------------------------------------
 void GameApplication::createScene(void)
 {
-    loadEnv();
+    loadEnv("map1.txt");
 	setupEnv();
 	loadObjects();
 	loadCharacters();
@@ -46,7 +46,7 @@ std::string getNewName() // return a unique name
 
 // Lecture 5: Load level from file!
 void // Load the buildings or ground plane, etc
-GameApplication::loadEnv()
+GameApplication::loadEnv(std::string fileName)
 {
 	//seed random
 	srand(time(0));
@@ -72,7 +72,7 @@ GameApplication::loadEnv()
 
 	string path = __FILE__; //gets the current cpp file's path with the cpp file
 	path = path.substr(0,1+path.find_last_of('\\')); //removes filename to leave path
-	path+= "map1.txt"; //if txt file is in the same directory as cpp file
+	path+= fileName; //if txt file is in the same directory as cpp file
 	inputfile.open(path);
 
 	//inputfile.open("D:/CS425-2012/Lecture 8/GameEngine-loadLevel/level001.txt"); // bad explicit path!!!
