@@ -59,8 +59,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 }
 
 Agent::~Agent(){
-	// mSceneMgr->destroySceneNode(mBodyNode); // Note that OGRE does not recommend doing this. It prefers to use clear scene
-	// mSceneMgr->destroyEntity(mBodyEntity);
+	//use clear scene
 }
 
 void
@@ -435,6 +434,9 @@ Agent::moveTo(){
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//wait until a turn comes up before switching directions
+			if (grid->isDone == true)
+				while (1) { std::cout << "YOU WON!!!!!!!!! "; } 
+
 			switch(orientation)
 			{
 			case 1:

@@ -247,9 +247,6 @@ GameApplication::setupEnv()
 	mSceneMgr->setShadowTextureSize(1024);
 	mSceneMgr->setShadowTextureCount(1);
 
-	// disable default camera control so the character can do its own 
-	//mCameraMan->setStyle(OgreBites::CS_FREELOOK); // CS_FREELOOK, CS_ORBIT, CS_MANUAL
-
 	// use small amount of ambient lighting
 	mSceneMgr->setAmbientLight(ColourValue(0.3f, 0.3f, 0.3f));
 
@@ -258,29 +255,18 @@ GameApplication::setupEnv()
 	light->setType(Light::LT_POINT);
 	light->setPosition(-10, 40, 20);
 	light->setSpecularColour(ColourValue::White);
-
-	//mSceneMgr->setSkyDome(true, "Examples/CloudySky", 5, 8); // Lecture 4
 }
 
 void // Load other props or objects
 GameApplication::loadObjects()
 {
 
-	//unused at the moment
-
 }
 
 void // Load actors, agents, characters
 GameApplication::loadCharacters()
 {
-	// Lecture 5: now loading from file
-	// agent = new Agent(this->mSceneMgr, "Sinbad", "Sinbad.mesh");
-}
 
-void
-GameApplication::loadNewLevel(std::string levelName)
-{
-	loadEnv(levelName);
 }
 
 void
@@ -382,23 +368,12 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     {
         mShutDown = true;
     }
-	////press space to trigger bots to move to a random point
-	////the destination goes into their queue
-	//else if (arg.key == OIS::KC_SPACE)
- //   {
-	//	//tell every agent to move!
- //       std::list<Agent*>::iterator iter;
-	//	for (iter = agentList.begin(); iter != agentList.end(); iter++){
-	//		if (*iter != NULL){
-	//			(*iter)->moveTo();
-	//		}
-	//	}
- //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map3.txt");
+		//loadEnv("map2.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
@@ -421,33 +396,28 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 			player->setOrientation(4);
 	}
    
-   //mCameraMan->injectKeyDown(arg);
     return true;
 }
 
 bool GameApplication::keyReleased( const OIS::KeyEvent &arg )
 {
-    //mCameraMan->injectKeyUp(arg);
     return true;
 }
 
 bool GameApplication::mouseMoved( const OIS::MouseEvent &arg )
 {
     if (mTrayMgr->injectMouseMove(arg)) return true;
-    //mCameraMan->injectMouseMove(arg);
     return true;
 }
 
 bool GameApplication::mousePressed( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     if (mTrayMgr->injectMouseDown(arg, id)) return true;
-    //mCameraMan->injectMouseDown(arg, id);
     return true;
 }
 
 bool GameApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButtonID id )
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
-    //mCameraMan->injectMouseUp(arg, id);
     return true;
 }
