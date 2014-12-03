@@ -368,12 +368,23 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     {
         mShutDown = true;
     }
-	else if (arg.key == OIS::KC_SPACE)
+	else if (arg.key == OIS::KC_1)
+	{
+		mSceneMgr->destroyAllEntities();
+		agentList.clear();
+		loadEnv("map1.txt");
+	}
+	else if (arg.key == OIS::KC_2)
+	{
+		mSceneMgr->destroyAllEntities();
+		agentList.clear();
+		loadEnv("map2.txt");
+	}
+	else if (arg.key == OIS::KC_3)
 	{
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map3.txt");
-		//loadEnv("map2.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
