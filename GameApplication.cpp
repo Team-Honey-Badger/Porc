@@ -278,6 +278,12 @@ GameApplication::loadCharacters()
 }
 
 void
+GameApplication::loadNewLevel(std::string levelName)
+{
+	loadEnv(levelName);
+}
+
+void
 GameApplication::addTime(Ogre::Real deltaTime)
 {
 	// Iterate over the list of agents
@@ -395,6 +401,8 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 		agentList.clear();
 		//createScene();
 		//loadEnv("map1.txt");
+
+		//loadNewLevel("map2.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
