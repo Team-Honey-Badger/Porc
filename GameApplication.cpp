@@ -31,6 +31,23 @@ void GameApplication::createScene(void)
 	loadObjects();
 	loadCharacters();
 }
+
+void GameApplication::createGUI()
+{
+	if (mTrayMgr == NULL) return;
+	using namespace OgreBites;
+
+	Ogre::StringVector life;
+	life.push_back("Lives Remaining: ");
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",250,life);
+
+	Ogre::StringVector score;
+	score.push_back("Score: ");
+	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",250,score);
+
+	mTrayMgr->showAll();
+}
+
 //////////////////////////////////////////////////////////////////
 // Lecture 5: Returns a unique name for loaded objects and agents
 std::string getNewName() // return a unique name 
