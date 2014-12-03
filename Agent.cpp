@@ -193,7 +193,7 @@ Agent::setupAnimations()
 			mBodyEntity->setMaterialName("Examples/Flare");
 			break;
 		default:
-			mBodyEntity->setMaterialName("Examples/Rocky");
+			mBodyEntity->setMaterialName("Examples/Flare");
 		}
 	}
 	else if(agentType == 'c'){

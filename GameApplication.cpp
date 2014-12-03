@@ -396,13 +396,9 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
-		//mSceneMgr->getRootSceneNode()->removeAndDestroyAllChildren();
-		mSceneMgr->clearScene();
+		mSceneMgr->destroyAllEntities();
 		agentList.clear();
-		//createScene();
-		//loadEnv("map1.txt");
-
-		//loadNewLevel("map2.txt");
+		loadEnv("map1.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
