@@ -30,6 +30,10 @@ private:
 	bool toggle; //toggle between S and G
 	Agent* player; //points to the player so ghosts can see him
 
+	//reset positions of player and ghosts
+	void resetPositions(Ogre::Real deltaTime);
+	Ogre::Real pauseTimer;						//time until player can move again
+
 	// all of the animations our character has, and a null ID
 	// some of these affect separate body parts and will be blended together
 	enum AnimID

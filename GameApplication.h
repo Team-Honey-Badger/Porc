@@ -14,7 +14,10 @@ private:
 	int x;
 	int z;
 
-	int level;
+	//level management
+	int level;				//current level
+	void levelManager();	//selects levels
+
 
 public:
     GameApplication(void);
