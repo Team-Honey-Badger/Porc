@@ -29,8 +29,6 @@ public:
 
 	void loadNewLevel(std::string levelName);	//method for loading new levels
 
-	void createGUI();		//method that creates our GUI
-
 	//////////////////////////////////////////////////////////////////////////
 	// Lecture 4: keyboard interaction
 	// moved from base application
@@ -45,7 +43,7 @@ public:
 
 protected:
     virtual void createScene(void);
-	virtual void createGUI();		//method that creates our GUI
+	virtual void createGUI(void);		//method that creates our GUI
 
 	OgreBites::ParamsPanel* lifeBoard; // Lecture 16
 	OgreBites::ParamsPanel* scoreBoard; // Lecture 16

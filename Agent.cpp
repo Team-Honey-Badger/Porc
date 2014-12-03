@@ -126,6 +126,18 @@ Agent::getAgentType()
 	return this->agentType;
 }
 
+int
+Agent::getScore()
+{
+	return this->score;
+}
+
+int
+Agent::getLives()
+{
+	return this->lives;
+}
+
 // update is called at every frame from GameApplication::addTime
 void
 Agent::update(Ogre::Real deltaTime) 
@@ -429,6 +441,9 @@ Agent::moveTo(){
 
 	//PLAYER
 	if(agentType == 'c'){
+
+		if (selfNode->getID() == 2)
+			score = score + 100; //increment the score whenever you eat a pellet
 
 		selfNode->setID(3);	//note that you walked here
 

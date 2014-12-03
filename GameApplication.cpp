@@ -38,11 +38,11 @@ void GameApplication::createGUI()
 	using namespace OgreBites;
 
 	Ogre::StringVector life;
-	life.push_back("Lives Remaining: ");
+	life.push_back("Lives Remaining:");
 	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",250,life);
 
 	Ogre::StringVector score;
-	score.push_back("Score: ");
+	score.push_back("Score:");
 	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",250,score);
 
 	mTrayMgr->showAll();
@@ -294,6 +294,10 @@ GameApplication::addTime(Ogre::Real deltaTime)
 	for (std::list<Agent*>::iterator iter = agentList.begin(); iter != agentList.end(); iter++)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
+
+	scoreBoard->setParamValue(0, Ogre::StringConverter::toString(agent->getScore()));
+
+	lifeBoard->setParamValue(0,Ogre::StringConverter::toString(agent->getLives()));
 }
 
 bool 
