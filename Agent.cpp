@@ -19,8 +19,6 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	reset = false;
 	doneWithLevel = false;
 	pauseTimer = 0;
-	score = 0;
-
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
 		lives = 3;
@@ -126,12 +124,6 @@ char
 Agent::getAgentType()
 {
 	return this->agentType;
-}
-
-int
-Agent::getScore()
-{
-	return this->score;
 }
 
 int
@@ -438,9 +430,6 @@ Agent::moveTo(){
 
 	//PLAYER
 	if(agentType == 'c'){
-
-		if (selfNode->getID() == 2)
-			score = score + 100; //increment the score whenever you eat a pellet
 
 		selfNode->setID(3);	//note that you walked here
 
