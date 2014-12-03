@@ -234,18 +234,6 @@ GameApplication::loadEnv(std::string fileName)
 		}
 	}
 
-	//if a goal was initilized on the level file, then give it to all agents
-	//there is a default goal set just in case
-	/*if(Gi != -1){
-		std::list<Agent*>::iterator iter;
-		for (iter = agentList.begin(); iter != agentList.end(); iter++){
-			if (*iter != NULL){
-				(*iter)->setGoalNode(Gi, Gj);
-			}
-		}
-	}*/
-
-	//grid->printToFile(); // see what the initial grid looks like.
 }
 
 void // Set up lights, shadows, etc
@@ -292,9 +280,8 @@ GameApplication::loadCharacters()
 void
 GameApplication::addTime(Ogre::Real deltaTime)
 {
-	// Lecture 5: Iterate over the list of agents
-	std::list<Agent*>::iterator iter;
-	for (iter = agentList.begin(); iter != agentList.end(); iter++)
+	// Iterate over the list of agents
+	for (std::list<Agent*>::iterator iter = agentList.begin(); iter != agentList.end(); iter++)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
 }
@@ -403,23 +390,27 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
-		player->reset = true;
+		
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
-		player->setOrientation(1);
+		if(player)
+			player->setOrientation(1);
 	}
 	else if (arg.key == OIS::KC_S || arg.key == OIS::KC_DOWN)
 	{
-		player->setOrientation(2);
+		if(player)
+			player->setOrientation(2);
 	}
 	else if (arg.key == OIS::KC_D || arg.key == OIS::KC_RIGHT)
 	{
-		player->setOrientation(3);
+		if(player)
+			player->setOrientation(3);
 	}
 	else if (arg.key == OIS::KC_A || arg.key == OIS::KC_LEFT)
 	{
-		player->setOrientation(4);
+		if(player)
+			player->setOrientation(4);
 	}
    
    //mCameraMan->injectKeyDown(arg);
