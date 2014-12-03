@@ -26,6 +26,8 @@ public:
 
 	void addTime(Ogre::Real deltaTime);		// update the game state
 
+	void loadNewLevel(std::string levelName);	//method for loading new levels
+
 	//////////////////////////////////////////////////////////////////////////
 	// Lecture 4: keyboard interaction
 	// moved from base application

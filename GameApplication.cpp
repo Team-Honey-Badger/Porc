@@ -290,6 +290,12 @@ GameApplication::loadCharacters()
 }
 
 void
+GameApplication::loadNewLevel(std::string levelName)
+{
+	loadEnv(levelName);
+}
+
+void
 GameApplication::addTime(Ogre::Real deltaTime)
 {
 	// Lecture 5: Iterate over the list of agents
@@ -403,7 +409,7 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
-		player->reset = true;
+		loadNewLevel("map2.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
