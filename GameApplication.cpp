@@ -26,7 +26,7 @@ GameApplication::~GameApplication(void)
 //-------------------------------------------------------------------------------------
 void GameApplication::createScene(void)
 {
-    loadEnv("win_cond_map.txt");
+    loadEnv("map1.txt");
 	setupEnv();
 	loadObjects();
 	loadCharacters();
@@ -39,11 +39,7 @@ void GameApplication::createGUI()
 
 	Ogre::StringVector life;
 	life.push_back("Lives Remaining");
-	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",200,life);
-
-	Ogre::StringVector score;
-	score.push_back("Score");
-	scoreBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPRIGHT,"Scoreboard",200,score);
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",150,life);
 
 	mTrayMgr->showAll();
 }
@@ -296,8 +292,6 @@ GameApplication::addTime(Ogre::Real deltaTime)
 			(*iter)->update(deltaTime);
 
 	lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
-
-	scoreBoard->setParamValue(0, Ogre::StringConverter::toString(agent->getScore()));
 }
 
 bool 
