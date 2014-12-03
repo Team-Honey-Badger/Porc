@@ -25,7 +25,7 @@ GameApplication::~GameApplication(void)
 //-------------------------------------------------------------------------------------
 void GameApplication::createScene(void)
 {
-    loadEnv("map1.txt");
+    loadEnv("win_cond_map.txt");
 	setupEnv();
 	loadObjects();
 	loadCharacters();
