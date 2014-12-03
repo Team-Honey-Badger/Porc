@@ -760,11 +760,9 @@ Agent::moveTo(){
 void
 Agent::collide(Ogre::Real deltaTime)
 {
-
-}
-
-void
-Agent::setAABB()
-{
-
+	if (agentType == 'g')
+	{
+		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true)))
+			std::cout << "ouch" << std::endl; //should take away a life, NYI
+	}
 }

@@ -74,8 +74,6 @@ private:
 
 	void collide(Ogre::Real deltaTime);		//tests collision detection between player and ghosts
 
-	void setAABB(); //sets the AABB's of the player and ghost
-
 	//////////////////////////////////////////////
 	// Lecture 4
 	bool procedural;						// Is this character performing a procedural animation
