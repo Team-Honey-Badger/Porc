@@ -42,7 +42,7 @@ void GameApplication::createGUI()
 
 	Ogre::StringVector life;
 	life.push_back("Lives Remaining");
-	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",200,life);
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",320,life);
 
 	mTrayMgr->showAll();
 }
@@ -292,23 +292,29 @@ GameApplication::addTime(Ogre::Real deltaTime)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
 
-	//look for win/lose conditions that result in changing levels
-	levelManager();
+	if(player)
+	{
+		//look for win/lose conditions that result in changing levels
+		levelManager();
 
-	switch(player->getLives()){
-	case 3:
-		lifeBoard->setParamValue(0, "<3 <3 <3");
-		break;
-	case 2:
-		lifeBoard->setParamValue(0, "<3 <3");
-		break;
-	case 1:
-		lifeBoard->setParamValue(0, "<3");
-		break;
-	default:
-		lifeBoard->setParamValue(0, ":(");
+		//convert ints to hearts
+		switch(player->getLives()){
+		case 3:
+			lifeBoard->setParamValue(0, "<3\t<3\t<3\t");
+			break;
+		case 2:
+			lifeBoard->setParamValue(0, "<3\t<3\t\t");
+			break;
+		case 1:
+			lifeBoard->setParamValue(0, "<3\t\t\t");
+			break;
+		default:
+			lifeBoard->setParamValue(0, "You are dead :(");
+		}
 	}
-	//lifeBoard->setParamValue(0, Ogre::StringConverter::toString(player->getLives()));
+	else{
+		lifeBoard->setParamValue(0, "Who cares, you won!");
+	}
 }
 
 bool 

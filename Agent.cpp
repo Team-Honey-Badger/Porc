@@ -138,13 +138,16 @@ Agent::update(Ogre::Real deltaTime)
 {
 	this->updateAnimations(deltaTime);		// Update animation playback	
 	
-	if(player->pauseTimer > 0){				//while paused
-		resetPositions(deltaTime);			//reposition ghosts and the player
-	}
-	else{
-		collide(deltaTime);					// Check if Ghosts collide with player
-		this->updateLocomote(deltaTime);	// Update Locomotion
-		moveTo();							// Find out where to go
+	if(player)
+	{
+		if(player->pauseTimer > 0){				//while paused
+			resetPositions(deltaTime);			//reposition ghosts and the player
+		}
+		else{
+			collide(deltaTime);					// Check if Ghosts collide with player
+			this->updateLocomote(deltaTime);	// Update Locomotion
+			moveTo();							// Find out where to go
+		}
 	}
 }
 
@@ -772,7 +775,8 @@ Agent::collide(Ogre::Real deltaTime)
 	if (agentType == 'g')
 	{
 		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){
-			player->loseLife();	//player loses a life when hit by a ghost 
+			if(player)
+				player->loseLife();	//player loses a life when hit by a ghost 
 		}
 	}
 }
