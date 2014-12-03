@@ -394,6 +394,7 @@ Agent::moveTo(){
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//wait until a turn comes up before switching directions
+
 			switch(orientation)
 			{
 			case 1:

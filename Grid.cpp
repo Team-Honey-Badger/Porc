@@ -371,3 +371,18 @@ int Grid::getRowNum(){
 int Grid::getColNum(){
 	return nCols;
 }
+
+//this is a interesting way to determin a win condition but i'll explain my logic:
+//we are gonna assume that if we see no pallets (aka IDs of 2), then the board is empty therefore we won
+//otherwise, the moment we see a ID == 2, that means there still exists at least one pallet and therefore, we havn't won yet
+bool
+Grid::isDone()
+{
+	for(int y = 0; y < nCols; y++){
+		for(int x = 0; x < nRows; x++){
+			if (this->data[y].data[x].getID() == 2)
+				return false;
+		}
+	}
+	return true;
+}

@@ -77,6 +77,8 @@ public:
 
 	int getRowNum();
 	int getColNum();
+
+	bool isDone();
 };
 
 #endif

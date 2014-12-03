@@ -270,12 +270,6 @@ GameApplication::loadCharacters()
 }
 
 void
-GameApplication::loadNewLevel(std::string levelName)
-{
-	loadEnv(levelName);
-}
-
-void
 GameApplication::addTime(Ogre::Real deltaTime)
 {
 	// Iterate over the list of agents
