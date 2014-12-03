@@ -18,6 +18,9 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	orientation = 0;
 	reset = false;
 	doneWithLevel = false;
+	//lostALife = false;
+	pauseTimer = 0;
+
 
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
@@ -134,6 +137,9 @@ Agent::update(Ogre::Real deltaTime)
 	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go	
 	collide(deltaTime);					// Check if Ghosts collide with player
+	if(player->pauseTimer > 0){			//while paused
+		resetPositions(deltaTime);		//reposition ghosts and the player
+	}
 }
 
 
@@ -292,41 +298,21 @@ void
 Agent::updateLocomote(Ogre::Real deltaTime)
 {
 	//teleportation
-	if(agentType == 'c' || agentType == 'g'){								//player and ghosts can teleport
-		if(!nextLocation())													//wait till they come to a full stop before teleporting	
+	if(agentType == 'c' || agentType == 'g'){						//player and ghosts can teleport
+		if(!nextLocation())											//wait till they come to a full stop before teleporting	
 		{
-			//if(selfNode->getColumn() == 0 && selfNode->getRow() == 9)		//teleporter enterance
-			//{
-			//	int x = 9, y = 18;											//teleporter exit
-			//	mBodyNode->setPosition(grid->getPosition(x,y));				//move everything over
-			//	mDestination = grid->getPosition(x,y);
-			//	mWalkList.clear();											//clear any pathfinding
-			//	mDistance = 0;
-			//	mWalkList.push_front(grid->getPosition(x,y));
-			//	selfNode = grid->getNode(x,y);								//tell agent where it is
-			//	goalNode = grid->getNode(x,y);
-			//}
-			//else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9)	
-			//{
-			//	int x = 9, y = 0;
-			//	mBodyNode->setPosition(grid->getPosition(x,y));
-			//	mDestination = grid->getPosition(x,y);
-			//	mWalkList.clear();
-			//	mDistance = 0;
-			//	mWalkList.push_front(grid->getPosition(x,y));
-			//	selfNode = grid->getNode(x,y);
-			//	goalNode = grid->getNode(x,y);
-			//}
-			if(selfNode->getColumn() == 0){
-				int y = 18, x = selfNode->getRow();
-				mBodyNode->setPosition(grid->getPosition(x,y));
-				mDestination = grid->getPosition(x,y);
-				mWalkList.clear();
-				mDistance = 0;
-				mWalkList.push_front(grid->getPosition(x,y));
-				selfNode = grid->getNode(x,y);
-				goalNode = grid->getNode(x,y);
+			//left boundry to right
+			if(selfNode->getColumn() == 0){							//teleporter enterance
+				int y = 18, x = selfNode->getRow();					//teleporter exit
+				mBodyNode->setPosition(grid->getPosition(x,y));		//move everything over
+				mDestination = grid->getPosition(x,y);				//set destination to exit
+				mWalkList.clear();									//clear any pathfinding
+				mDistance = 0;										//clear distance since already here
+				mWalkList.push_front(grid->getPosition(x,y));		//walk here (just in case)
+				selfNode = grid->getNode(x,y);						//tell agent where it is
+				goalNode = grid->getNode(x,y);						//make agent want to be here
 			}
+			//right boundry to left
 			else if(selfNode->getColumn() == 18){
 				int y = 0, x = selfNode->getRow();
 				mBodyNode->setPosition(grid->getPosition(x,y));
@@ -337,6 +323,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
+			//top boundry to bottom
 			else if(selfNode->getRow() == 0){
 				int x = 18, y = selfNode->getColumn();
 				mBodyNode->setPosition(grid->getPosition(x,y));
@@ -347,6 +334,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
+			//bottom boundry to top
 			else if(selfNode->getRow() == 18){
 				int x = 0, y = selfNode->getColumn();
 				mBodyNode->setPosition(grid->getPosition(x,y));
@@ -362,6 +350,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 
 	if (mDirection == Ogre::Vector3::ZERO) 
     {
+
         if (nextLocation()) 
         {
             //set to running animation
@@ -424,6 +413,12 @@ Agent::moveTo(){
 	if(agentType == 'x'){
 		if(selfNode->getID() == 3){
 			mBodyNode->setVisible(false);
+
+			if (grid->isDone())					//check if there are no more barrels
+			{
+				player->doneWithLevel = true;	//declare the level finished after the last barrel is collected
+			}
+
 		}
 	}
 
@@ -433,10 +428,6 @@ Agent::moveTo(){
 		selfNode->setID(3);	//note that you walked here
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
-			//wait until a turn comes up before switching directions
-			if (grid->isDone()){
-				doneWithLevel = true;
-			}
 
 			switch(orientation)
 			{
@@ -544,8 +535,6 @@ Agent::moveTo(){
 					intersections.push_back(grid->getNode(18, i));
 				}
 			}
-			//intersections.push_back(grid->getNode(9,0));
-			//intersections.push_back(grid->getNode(9,18));
 		}
 
 		//start and goal for A*
@@ -777,7 +766,7 @@ Agent::collide(Ogre::Real deltaTime)
 	if (agentType == 'g')
 	{
 		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){
-			player->loseLife();
+			player->loseLife();	//player loses a life when hit by a ghost 
 		}
 	}
 }
@@ -786,8 +775,31 @@ void
 Agent::loseLife()
 {
 	lives--;
+	pauseTimer = Ogre::Real(5);	//pause game while repositioning occurs
 	if(lives <= 0){
-		reset = true; //reset game when you die
+		reset = true; //reset game when you are out of lives
 	}
 
+}
+
+void
+Agent::resetPositions(Ogre::Real deltaTime){
+	pauseTimer -= deltaTime;										//count down time
+	if(agentType == 'c' || agentType == 'g')
+	{
+		int y = startNode->getColumn(), x = startNode->getRow();	//select startNode(spawn) as teleporter exit
+		mBodyNode->setPosition(grid->getPosition(x,y));				//move everything over
+		mDestination = grid->getPosition(x,y);						//set destination to exit
+		mWalkList.clear();											//clear any pathfinding
+		mDistance = 0;												//clear distance since already here
+		mWalkList.push_front(grid->getPosition(x,y));				//walk here (just in case)
+		selfNode = grid->getNode(x,y);								//tell agent where it is
+		goalNode = grid->getNode(x,y);								//make agent want to be here
+		setBaseAnimation(ANIM_IDLE_BASE);							//hold animation in place
+		setTopAnimation(ANIM_IDLE_TOP);
+		mDirection = Ogre::Vector3::ZERO;							//face default direction while held in place
+		Ogre::Vector3 src = mBodyNode->getOrientation() * Ogre::Vector3::UNIT_Z;
+		Ogre::Quaternion quat = src.getRotationTo(mDirection);
+		mBodyNode->setOrientation(quat);
+	}
 }

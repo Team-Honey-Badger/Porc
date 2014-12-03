@@ -3,6 +3,9 @@
 #include <sstream>
 #include <map> 
 #include "Grid.h"
+#include <string>       // std::string
+#include <iostream>     // std::cout
+#include <sstream>      // std::stringstream
 
 //-------------------------------------------------------------------------------------
 GameApplication::GameApplication(void)
@@ -228,11 +231,9 @@ GameApplication::loadEnv(std::string fileName)
 	
 	inputfile.close();
 
-	//give a pointer of the player agent to all ghosts
+	//give a pointer of the player agent to all other agents
 	for(std::list<Agent*>::iterator i = agentList.begin(); i != agentList.end(); i++){
-		if((*i)->getAgentType() == 'g'){
-			(*i)->setPlayer(player);
-		}
+		(*i)->setPlayer(player);
 	}
 
 }
@@ -277,21 +278,14 @@ GameApplication::addTime(Ogre::Real deltaTime)
 	for (std::list<Agent*>::iterator iter = agentList.begin(); iter != agentList.end(); iter++)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
+	
+	//look for win/lose conditions that result in changing levels
+	levelManager();
 }
 
 bool 
 GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplication
 {
-	//level changing is integrated with pressing keys
-	if(player->reset)			//if the game needs to be reset
-	{
-		level = 1;				//go back to level 1
-	}
-	if(player->doneWithLevel)	//if player won the map
-	{
-		level++;				//go to the next level
-	}
-
     if (mTrayMgr->isDialogVisible()) return true;   // don't process any more keys if dialog is up
 
     if (arg.key == OIS::KC_F)   // toggle visibility of advanced frame stats
@@ -379,24 +373,27 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
     {
         mShutDown = true;
     }
-	else if (arg.key == OIS::KC_1 || (player->reset))										//level 1
+	else if (arg.key == OIS::KC_1)				//level 1
 	{
+		level = 1;							//identify level
 		mSceneMgr->destroyAllEntities();	//erase all things in the level
 		agentList.clear();					//erase all the agents in the level
 		loadEnv("map1.txt");				//load a level
 		player->reset = false;				//the level no longer needs to be reset
 		player->doneWithLevel = false;		//the player is no longer done with the level
 	}
-	else if (arg.key == OIS::KC_2 || (player->doneWithLevel && level == 2))					//level 2
+	else if (arg.key == OIS::KC_2)				//level 2
 	{
+		level = 2;							
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map2.txt");
 		player->reset = false;
 		player->doneWithLevel = false;
 	}
-	else if (arg.key == OIS::KC_3 || (player->doneWithLevel && level == 3))					//level 3
+	else if (arg.key == OIS::KC_3)				//level 3
 	{
+		level = 3;							
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
 		loadEnv("map3.txt");
@@ -448,4 +445,29 @@ bool GameApplication::mouseReleased( const OIS::MouseEvent &arg, OIS::MouseButto
 {
     if (mTrayMgr->injectMouseUp(arg, id)) return true;
     return true;
+}
+
+void GameApplication::levelManager(){
+	if(player->reset || player->doneWithLevel)
+	{
+		if(player->reset)						//if level needs to be reset
+		{										
+			level = 1;							//return to level 1
+		}
+		else if(player->doneWithLevel)			//if player wins a level
+		{
+			level++;							//go to next level
+		}
+		mSceneMgr->destroyAllEntities();		//erase all the things in the level
+		agentList.clear();						//erase all the agents
+
+		std::stringstream levelName;			//build the map name into here
+		levelName << "map" << level << ".txt";	//write the file name with the level number
+		std::string map;						//write the map name into here 
+		levelName >> map;						//stream built file name into map string
+		//std::cout<<map<<std::endl;				
+		loadEnv(map);							//load map							
+		player->reset = false;					//the level no longer needs to be reset
+		player->doneWithLevel = false;			//the player is no longer done with the level
+	}
 }
