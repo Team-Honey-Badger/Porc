@@ -1,8 +1,6 @@
 #include "Agent.h"
 #include "Grid.h"
 
-int Agent::gID = 0; //declaring the identitfier that numerates the ghosts
-
 Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string filename, float height, float scale, Grid *grid, char type)
 {
 	using namespace Ogre;
@@ -19,6 +17,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	this->agentType = type;
 	orientation = 0;
 	reset = false;
+	doneWithLevel = false;
 
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
@@ -111,10 +110,6 @@ Agent::setOrientation(int orientation)
 	this->orientation = orientation;
 }
 
-void Agent::setID(int x){
-	gID = x;
-}
-
 int
 Agent::getOrientation()
 {
@@ -178,23 +173,7 @@ Agent::setupAnimations()
 
 	//color the agents!
 	if(agentType == 'g'){
-		gID++; //count Ghosts
-		switch(gID){ //turns out this had no point, but just in case we ever want to have different ghost colors...
-		case 1:
-			mBodyEntity->setMaterialName("Examples/Flare"); //looks like an actual ghost!
-			break;
-		case 2:
-			mBodyEntity->setMaterialName("Examples/Flare");
-			break;
-		case 3:
-			mBodyEntity->setMaterialName("Examples/Flare");
-			break;
-		case 4:
-			mBodyEntity->setMaterialName("Examples/Flare");
-			break;
-		default:
-			mBodyEntity->setMaterialName("Examples/Flare");
-		}
+		mBodyEntity->setMaterialName("Examples/Flare"); //looks like an actual ghost!
 	}
 	else if(agentType == 'c'){
 		mBodyEntity->setMaterialName("Examples/Hilite/Yellow"); //pacman is yellow
@@ -731,5 +710,16 @@ Agent::collide(Ogre::Real deltaTime)
 	{
 		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true)))
 			std::cout << "ouch" << std::endl; //should take away a life, NYI
+			lives--;
+
+	}
+}
+
+void
+Agent::loseLife()
+{
+	lives--;
+	if(lives <= 0){
+		reset = true; //reset game when you die
 	}
 }
