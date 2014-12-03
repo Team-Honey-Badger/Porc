@@ -18,7 +18,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	orientation = 0;
 	reset = false;
 	doneWithLevel = false;
-	pauseTimer = 0;
+	pauseTimer = 0.0;
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
 		lives = 3;
@@ -137,7 +137,7 @@ void
 Agent::update(Ogre::Real deltaTime) 
 {
 	this->updateAnimations(deltaTime);		// Update animation playback	
-	
+
 	if(player)
 	{
 		if(player->pauseTimer > 0){				//while paused

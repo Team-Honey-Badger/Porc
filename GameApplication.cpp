@@ -29,7 +29,7 @@ GameApplication::~GameApplication(void)
 //-------------------------------------------------------------------------------------
 void GameApplication::createScene(void)
 {
-    loadEnv("map4.txt");
+    loadEnv("map1.txt");
 	setupEnv();
 	loadObjects();
 	loadCharacters();
