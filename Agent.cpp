@@ -434,7 +434,7 @@ Agent::moveTo(){
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 			//wait until a turn comes up before switching directions
-			if (grid->isDone == true)
+			if (grid->isDone() == true)
 				while (1) { std::cout << "YOU WON!!!!!!!!! "; } 
 
 			switch(orientation)
