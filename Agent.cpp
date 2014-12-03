@@ -136,12 +136,15 @@ Agent::getLives()
 void
 Agent::update(Ogre::Real deltaTime) 
 {
-	this->updateAnimations(deltaTime);	// Update animation playback
-	this->updateLocomote(deltaTime);	// Update Locomotion
-	moveTo();							// Find out where to go	
-	collide(deltaTime);					// Check if Ghosts collide with player
-	if(player->pauseTimer > 0){			//while paused
-		resetPositions(deltaTime);		//reposition ghosts and the player
+	this->updateAnimations(deltaTime);		// Update animation playback	
+	
+	if(player->pauseTimer > 0){				//while paused
+		resetPositions(deltaTime);			//reposition ghosts and the player
+	}
+	else{
+		collide(deltaTime);					// Check if Ghosts collide with player
+		this->updateLocomote(deltaTime);	// Update Locomotion
+		moveTo();							// Find out where to go
 	}
 }
 

@@ -42,7 +42,7 @@ void GameApplication::createGUI()
 
 	Ogre::StringVector life;
 	life.push_back("Lives Remaining");
-	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",150,life);
+	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",200,life);
 
 	mTrayMgr->showAll();
 }

@@ -49,6 +49,7 @@ protected:
 	virtual void createGUI(void);		//method that creates our GUI
 
 	OgreBites::ParamsPanel* lifeBoard;
+	OgreBites::ParamsPanel* scoreBoard;
 };
 
 #endif // #ifndef
