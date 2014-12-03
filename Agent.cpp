@@ -296,20 +296,60 @@ Agent::updateLocomote(Ogre::Real deltaTime)
 	if(agentType == 'c' || agentType == 'g'){								//player and ghosts can teleport
 		if(!nextLocation())													//wait till they come to a full stop before teleporting	
 		{
-			if(selfNode->getColumn() == 0 && selfNode->getRow() == 9)		//teleporter enterance
-			{
-				int x = 9, y = 18;											//teleporter exit
-				mBodyNode->setPosition(grid->getPosition(x,y));				//move everything over
+			//if(selfNode->getColumn() == 0 && selfNode->getRow() == 9)		//teleporter enterance
+			//{
+			//	int x = 9, y = 18;											//teleporter exit
+			//	mBodyNode->setPosition(grid->getPosition(x,y));				//move everything over
+			//	mDestination = grid->getPosition(x,y);
+			//	mWalkList.clear();											//clear any pathfinding
+			//	mDistance = 0;
+			//	mWalkList.push_front(grid->getPosition(x,y));
+			//	selfNode = grid->getNode(x,y);								//tell agent where it is
+			//	goalNode = grid->getNode(x,y);
+			//}
+			//else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9)	
+			//{
+			//	int x = 9, y = 0;
+			//	mBodyNode->setPosition(grid->getPosition(x,y));
+			//	mDestination = grid->getPosition(x,y);
+			//	mWalkList.clear();
+			//	mDistance = 0;
+			//	mWalkList.push_front(grid->getPosition(x,y));
+			//	selfNode = grid->getNode(x,y);
+			//	goalNode = grid->getNode(x,y);
+			//}
+			if(selfNode->getColumn() == 0){
+				int y = 18, x = selfNode->getRow();
+				mBodyNode->setPosition(grid->getPosition(x,y));
 				mDestination = grid->getPosition(x,y);
-				mWalkList.clear();											//clear any pathfinding
+				mWalkList.clear();
 				mDistance = 0;
 				mWalkList.push_front(grid->getPosition(x,y));
-				selfNode = grid->getNode(x,y);								//tell agent where it is
+				selfNode = grid->getNode(x,y);
 				goalNode = grid->getNode(x,y);
 			}
-			else if(selfNode->getColumn() == 18 && selfNode->getRow() == 9)	
-			{
-				int x = 9, y = 0;
+			else if(selfNode->getColumn() == 18){
+				int y = 0, x = selfNode->getRow();
+				mBodyNode->setPosition(grid->getPosition(x,y));
+				mDestination = grid->getPosition(x,y);
+				mWalkList.clear();
+				mDistance = 0;
+				mWalkList.push_front(grid->getPosition(x,y));
+				selfNode = grid->getNode(x,y);
+				goalNode = grid->getNode(x,y);
+			}
+			else if(selfNode->getRow() == 0){
+				int x = 18, y = selfNode->getColumn();
+				mBodyNode->setPosition(grid->getPosition(x,y));
+				mDestination = grid->getPosition(x,y);
+				mWalkList.clear();
+				mDistance = 0;
+				mWalkList.push_front(grid->getPosition(x,y));
+				selfNode = grid->getNode(x,y);
+				goalNode = grid->getNode(x,y);
+			}
+			else if(selfNode->getRow() == 18){
+				int x = 0, y = selfNode->getColumn();
 				mBodyNode->setPosition(grid->getPosition(x,y));
 				mDestination = grid->getPosition(x,y);
 				mWalkList.clear();
@@ -476,8 +516,33 @@ Agent::moveTo(){
 					}
 				}
 			}
-			intersections.push_back(grid->getNode(9,0));
-			intersections.push_back(grid->getNode(9,18));
+			//find special spots where teleporters are located
+			for(int i = 0; i<19; i++){
+				GridNode *temp = grid->getNode(i, 0);
+				if(temp->isClear()){
+					intersections.push_back(grid->getNode(i, 0));
+				}
+			}
+			for(int i = 0; i<19; i++){
+				GridNode *temp = grid->getNode(i, 18);
+				if(temp->isClear()){
+					intersections.push_back(grid->getNode(i, 18));
+				}
+			}
+			for(int i = 0; i<19; i++){
+				GridNode *temp = grid->getNode(0, i);
+				if(temp->isClear()){
+					intersections.push_back(grid->getNode(0, i));
+				}
+			}
+			for(int i = 0; i<19; i++){
+				GridNode *temp = grid->getNode(18, i);
+				if(temp->isClear()){
+					intersections.push_back(grid->getNode(18, i));
+				}
+			}
+			//intersections.push_back(grid->getNode(9,0));
+			//intersections.push_back(grid->getNode(9,18));
 		}
 
 		//start and goal for A*
@@ -722,4 +787,5 @@ Agent::loseLife()
 	if(lives <= 0){
 		reset = true; //reset game when you die
 	}
+
 }

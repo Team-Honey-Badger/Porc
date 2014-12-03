@@ -398,7 +398,7 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 	{
 		mSceneMgr->destroyAllEntities();
 		agentList.clear();
-		loadEnv("map1.txt");
+		loadEnv("map3.txt");
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
