@@ -12,7 +12,6 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	selfNode = NULL;
 	startNode = new GridNode(-1, 0, 0, true);
 	goalNode = new GridNode(-1, 0, 0, true);
-	prev = new GridNode(-1, 0, 0, true);
 	toggle = false;
 	this->agentType = type;
 	orientation = 0;
@@ -65,7 +64,7 @@ Agent::~Agent(){
 void
 Agent::setSelfNode(int r, int c){
 	selfNode = grid->getNode(r,c);
-	selfNode->parent = NULL;
+	//selfNode->parent = NULL;
 }
 
 GridNode*
@@ -77,7 +76,7 @@ void
 Agent::setStartNode(int r, int c){
 	delete startNode; //free the default node
 	startNode = grid->getNode(r,c);
-	startNode->parent = NULL;
+	//startNode->parent = NULL;
 }
 
 void
@@ -86,9 +85,8 @@ Agent::setGoalNode(){
 		//select a random interestion to walk to
 		std::random_shuffle(intersections.begin(), intersections.end());
 		goalNode = intersections.at(0);
-	}while( grid->getDistance(goalNode, selfNode) > 4 || ( prev->getColumn() == goalNode->getColumn() && prev->getRow() == goalNode->getRow() ) );	//A* to an intersection within 4 nodes(more random movement that way) and not your pevious spot
-	prev = selfNode;	//save current location as previous spot
-	goalNode->parent = NULL;
+	}while( grid->getDistance(goalNode, selfNode) > 4 ); // A* to an intersection within 4 nodes(more random movement that way)
+	//goalNode->parent = NULL;
 }
 
 void 
@@ -776,7 +774,9 @@ Agent::collide(Ogre::Real deltaTime)
 {
 	if (agentType == 'g')
 	{
-		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){ //collision detection testing, all in one line
+		Ogre::AxisAlignedBox ghostBox = this->mBodyEntity->getWorldBoundingBox(true);		//get ghost's hitbox
+		Ogre::AxisAlignedBox playerBox = player->mBodyEntity->getWorldBoundingBox(true);	//get player's hitbox
+		if (ghostBox.intersects(playerBox.getCenter())){									//check for a collision between the ghost's hitbox the end center of the player
 			if(player)
 				player->loseLife();	//player loses a life when hit by a ghost 
 		}

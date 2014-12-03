@@ -12,7 +12,7 @@ x Barrel.mesh 10.0 0.4 x
 World
 
 wwwwwwwwwwwwwwwwwww
-woxxxxxxxwxxxxxxxow
+wxxxxxxxxwxxxxxxxxw
 wxwwxwwwxwxwwwxwwxw
 wxxxxxxxxxxxxxxxxxw
 wxwwxwxwwwwwxwxwwxw
@@ -20,7 +20,7 @@ wxxxxwxxxwxxxwxxxxw
 wwwwxwwwxwxwwwxwwww
 ooowxwxxxxxxxwxwooo
 wwwwxwxwwgwwxwxwwww
-oxxxxxxwgggwxxxxxxo
+xxxxxxxwgggwxxxxxxx
 wwwwxwxwwwwwxwxwwww
 ooowxwxxxcxxxwxwooo
 wwwwxwwwxwxwwwxwwww
@@ -28,6 +28,6 @@ wxxxxwxxxwxxxwxxxxw
 wxwwxwxwwwwwxwxwwxw
 wxxxxxxxxxxxxxxxxxw
 wxwwxwwwxwxwwwxwwxw
-woxxxxxxxwxxxxxxxow
+wxxxxxxxxwxxxxxxxxw
 wwwwwwwwwwwwwwwwwww
 

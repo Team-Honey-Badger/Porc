@@ -26,7 +26,6 @@ private:
 	GridNode *selfNode; //where agent is right now
 	GridNode *startNode; //where the agent starts
 	GridNode *goalNode;	//where agent wants to go
-	GridNode *prev;		//where agent was last time
 	bool toggle; //toggle between S and G
 	Agent* player; //points to the player so ghosts can see him
 

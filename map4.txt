@@ -11,20 +11,20 @@ x Barrel.mesh 10.0 0.4 x
 
 World
 
-ooooooooooooooooooo
-ooowwwwwooooooxoooo
-oowoooooooooxoooooo
-oowooowwwooooooxooo
-ooowoooowooxooooooo
-oooowwwwoooooooooxo
-oooooooxooowwwwwooo
-ooxooooooowoooooooo
-oooooxoooowooowwwoo
-ooooooooxoowoooowoo
-oooxoooooooowwwwooo
-oooooooooooooooxooo
-oooxooooxoooooooooo
-ooxoooooooooooxoooo
+oooowwooooxoowwoooo
+oxowwwwxoooowwwwooo
+ooooowooowooowoxooo
+owwwoxooowwoooowwwo
+oowwwwwoooxowwwwwoo
+oooowwwwwwwwwwwoxoo
+oxoooooxooooxoxoooo
+owooowoowwwoowoxowo
+xowowoxwooowowooowo
+ooxwooowoxowowooowx
+ooowooowooowowooowo
+ooowooxowwwooowwwoo
+ooxooooooooooxooooo
+ooooxoooxoooooooxoo
 wooooowowwwowwooowo
 wooooowoowoowowoowo
 owowowxoowoxwoowowo
