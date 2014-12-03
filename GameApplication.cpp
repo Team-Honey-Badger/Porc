@@ -434,6 +434,15 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
 		player->reset = false;
 		player->doneWithLevel = false;
 	}
+	else if (arg.key == OIS::KC_4)				//level 4
+	{
+		level = 4;							
+		mSceneMgr->destroyAllEntities();
+		agentList.clear();
+		loadEnv("map4.txt");
+		player->reset = false;
+		player->doneWithLevel = false;
+	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
 		if(player)
