@@ -19,6 +19,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	this->agentType = type;
 	orientation = 0;
 	telecount = 0;
+	reset = false;
 
 	//identify player and give him 3 lives
 	if(agentType == 'c'){
@@ -136,6 +137,18 @@ Agent::getAgentType()
 void
 Agent::update(Ogre::Real deltaTime) 
 {
+	if(reset){
+		reset = false;
+		int x = 1, y = 1;
+		mBodyNode->setPosition(grid->getPosition(x,y)); // make the Ogre stand on the plane (almost)
+		mDestination = grid->getPosition(x,y);
+		mWalkList.clear();
+		mDistance = 0;
+		mWalkList.push_front(grid->getPosition(x,y));
+		selfNode = grid->getNode(x,y);
+		goalNode = grid->getNode(x,y);
+	}
+
 	this->updateAnimations(deltaTime);	// Update animation playback
 	this->updateLocomote(deltaTime);	// Update Locomotion
 	moveTo();							// Find out where to go	
@@ -358,6 +371,7 @@ Agent::updateLocomote(Ogre::Real deltaTime)
     {
         if (nextLocation()) 
         {
+			//turn off teleportation if at next location
 			if(telecount == 0){
 				toggle = false;
 			}

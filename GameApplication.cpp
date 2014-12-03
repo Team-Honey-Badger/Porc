@@ -403,7 +403,7 @@ GameApplication::keyPressed( const OIS::KeyEvent &arg ) // Moved from BaseApplic
  //   }
 	else if (arg.key == OIS::KC_SPACE)
 	{
-		//do nothing
+		player->reset = true;
 	}
 	else if (arg.key == OIS::KC_W || arg.key == OIS::KC_UP)
 	{
