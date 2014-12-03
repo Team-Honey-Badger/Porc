@@ -23,7 +23,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 	if(agentType == 'c'){
 		lives = 3;
 	}
-	else{
+	else{ //else the agent is a ghost or a pellet
 		lives = -1;
 	}
 
@@ -61,7 +61,7 @@ Agent::Agent(Ogre::SceneManager* SceneManager, std::string name, std::string fil
 Agent::~Agent(){
 	//use clear scene
 }
-
+//setter and getter for selfNode
 void
 Agent::setSelfNode(int r, int c){
 	selfNode = grid->getNode(r,c);
@@ -103,6 +103,7 @@ Agent::setPosition(float x, float y, float z)
 	}
 }
 
+//getter and setters for Orientation
 void
 Agent::setOrientation(int orientation)
 {
@@ -138,7 +139,7 @@ Agent::update(Ogre::Real deltaTime)
 {
 	this->updateAnimations(deltaTime);		// Update animation playback	
 
-	if(player)
+	if(player) //if the current agent (this) is a player
 	{
 		if(player->pauseTimer > 0){				//while paused
 			resetPositions(deltaTime);			//reposition ghosts and the player
@@ -438,6 +439,7 @@ Agent::moveTo(){
 
 		if(mDirection == Ogre::Vector3::ZERO){ // only pick another location when not in motion
 
+			//Here is where I use Orientation to control player movement, using a simple switch statement, i am able to easily break up player movement into four different cases
 			switch(orientation)
 			{
 			case 1:
@@ -774,7 +776,7 @@ Agent::collide(Ogre::Real deltaTime)
 {
 	if (agentType == 'g')
 	{
-		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){
+		if (this->mBodyEntity->getWorldBoundingBox(true).intersects(player->mBodyEntity->getWorldBoundingBox(true))){ //collision detection testing, all in one line
 			if(player)
 				player->loseLife();	//player loses a life when hit by a ghost 
 		}
@@ -792,6 +794,7 @@ Agent::loseLife()
 
 }
 
+//when the player dies, this function is called to reset the map to how it is at the start.
 void
 Agent::resetPositions(Ogre::Real deltaTime){
 	pauseTimer -= deltaTime;										//count down time

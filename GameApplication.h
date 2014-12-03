@@ -11,8 +11,8 @@ private:
 	Agent* agent; // an agent
 	std::list<Agent*> agentList; //the agentList (holds the ghosts and the player)
 	//grid size variables
-	int x;
-	int z;
+	int x; //column
+	int z; //row
 
 	//level management
 	int level;				//current level
@@ -48,7 +48,7 @@ protected:
     virtual void createScene(void);
 	virtual void createGUI(void);		//method that creates our GUI
 
-	OgreBites::ParamsPanel* lifeBoard;
+	OgreBites::ParamsPanel* lifeBoard;	//GUI element for life
 	OgreBites::ParamsPanel* scoreBoard;
 };
 

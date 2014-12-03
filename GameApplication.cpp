@@ -29,7 +29,7 @@ GameApplication::~GameApplication(void)
 //-------------------------------------------------------------------------------------
 void GameApplication::createScene(void)
 {
-    loadEnv("map1.txt");
+    loadEnv("map1.txt"); //changed loadEnv such that it can take a string as a parameter, and then will try to load that txt file
 	setupEnv();
 	loadObjects();
 	loadCharacters();
@@ -40,6 +40,7 @@ void GameApplication::createGUI()
 	if (mTrayMgr == NULL) return;
 	using namespace OgreBites;
 
+	//creates the Simple GUI element that displays your lives left
 	Ogre::StringVector life;
 	life.push_back("Lives Remaining");
 	lifeBoard = mTrayMgr->createParamsPanel(OgreBites::TL_TOPLEFT,"Lives Remaining",320,life);
@@ -275,13 +276,13 @@ GameApplication::setupEnv()
 void // Load other props or objects
 GameApplication::loadObjects()
 {
-
+	//nothing
 }
 
 void // Load actors, agents, characters
 GameApplication::loadCharacters()
 {
-
+	//nothing
 }
 
 void
@@ -292,7 +293,7 @@ GameApplication::addTime(Ogre::Real deltaTime)
 		if (*iter != NULL)
 			(*iter)->update(deltaTime);
 
-	if(player)
+	if(player) //if the agent being updated is the player character
 	{
 		//look for win/lose conditions that result in changing levels
 		levelManager();

@@ -24,7 +24,7 @@ private:
 
 	Grid *grid; //pointer to the grid
 	GridNode *selfNode; //where agent is right now
-	GridNode *startNode;
+	GridNode *startNode; //where the agent starts
 	GridNode *goalNode;	//where agent wants to go
 	GridNode *prev;		//where agent was last time
 	bool toggle; //toggle between S and G
@@ -95,10 +95,10 @@ public:
 
 	void setPosition(float x, float y, float z);
 
-	void setOrientation(int orientation);
+	void setOrientation(int orientation); //Orientation is used for Player movement.
 	int getOrientation();
 
-	char getAgentType();
+	char getAgentType();				//fetches the agentType of the agent
 
 	void update(Ogre::Real deltaTime);		// update the agent
 	
